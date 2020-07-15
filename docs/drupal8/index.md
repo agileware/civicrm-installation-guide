@@ -119,11 +119,11 @@ There should now be a **CiviCRM** link in your Drupal menu. Click that link and 
 
 ## D8/CiviCRM Integration modules {:#integration-modules}
 
-Webform CiviCRM module
+**Webform CiviCRM module**
 Project page: https://www.drupal.org/project/webform_civicrm
 Documentation: https://docs.civicrm.org/webform-civicrm/en/latest
 
-CiviCRM Entity module
+**CiviCRM Entity module**
 Project page: https://www.drupal.org/project/civicrm_entity
 
 ## Trouble-shooting Resources {:#troubleshooting}
