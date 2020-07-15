@@ -1,0 +1,45 @@
+site_name: 'CiviCRM Installation Guide'
+site_url: 'https://docs.civicrm.org/installation/en/stable/'
+repo_url: 'https://lab.civicrm.org/documentation/docs/installation'
+repo_name: GitLab
+site_description: 'This guide is aimed at CiviCRM users and implementors who would like to learn how to install and setup CiviCRM.'
+site_author: 'The CiviCRM community'
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/gitlab
+markdown_extensions:
+  - attr_list
+  - admonition
+  - def_list
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.tilde
+  - pymdownx.betterem
+  - pymdownx.mark
+
+nav:
+  - Home: index.md
+  - Install CiviCRM on Backdrop: backdrop/index.md
+  - Install CiviCRM on Drupal 7: drupal7/index.md
+  - Install CiviCRM on Drupal 8: drupal8/index.md
+#  - Install CiviCRM on Drupal 9: drupal9/index.md
+  - Install CiviCRM on Joomla: joomla/index.md
+  - Install CiviCRM on WordPress: wordpress/index.md 
+  - General: 
+      - Requirements: general/requirements.md
+      - Permissions: general/permissions.md
+      - Internationalisation: general/i18n_l10n.md
+      - Troubleshooting: general/troubleshooting.md
+  - Planning:
+      - Identifying your needs: planning/index.md
+      - Trying a demo: planning/demo.md
+      - Hosting: planning/hosting.md
+      - Choosing a CMS: planning/cms.md
+      - Transitioning to CiviCRM: planning/transition.md
+
+
