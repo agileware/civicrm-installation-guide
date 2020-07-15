@@ -128,4 +128,4 @@ There should now be a **CiviCRM** link in your Backdrop menu. Click that link an
 
 ## Trouble-shooting Resources {:#troubleshooting}
 
-* Review the [Troubleshooting](../troubleshooting.md) page for help with problems you may encounter during the installation.
+* Review the [Troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.
