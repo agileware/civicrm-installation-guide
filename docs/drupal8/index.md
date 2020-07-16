@@ -60,10 +60,12 @@ To require the CiviCRM libraries on a Drupal 8 site you can use the following on
     It's currently only possible to install CiviCRM in English (US) on Drupal 8 and adding the language files involves breaking with Composer best practices by writing the contents of the `civicrm-l10n` tarball into `vendor/civicrm/civicrm-core` or configuring the `civicrm.l10n` directory path after you install and placing the contents of the `civicrm-l10n` tarball into the configured directory.
 
 ## Run the Installer {:#installer}
-
+<!-- markdownlint-disable MD046 -->
 !!! warning "Write permissions"
     It is critical that your web-server user is able to write to the `web/sites/default/` directory in order to create `civicrm.settings.php` and that you have an appropriate value for execution time(s) and memory limit(s) as any interruption to the installer can (and will) result in an unusable install and require remedial steps to correct or a full reinstall! By default on Drupal 8.8+ this directory path is not writable by default, before installing you should ensure you grant write access to your web server user. With, e.g: `sudo chmod u+w web/sites/default`.
 
+    For multisite installations you'll also need to ensure your web server user has write access to additional sites e.g: `sudo chmod u+w web/sites/site2.example.org`.
+<!-- markdownlint-enable MD046 -->
 * Login to your Drupal site with Administrator level permissions.
 * Proceed to **Manage >> Extend** or point your web browser to the following URL:
 
