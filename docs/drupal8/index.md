@@ -88,6 +88,15 @@ The **Configuration Checklist** provides a convenient way to work through the se
 
 There should now be a **CiviCRM** link in your Drupal menu. Click that link and the CiviCRM Menu, Shortcuts, Search and New Individual Blocks should appear. You can now explore CiviCRM end-user features and begin configuring CiviCRM for your site/organization needs.
 
+## D8/CiviCRM Integration modules {:#integration-modules}
+
+**Webform CiviCRM module**
+Project page: https://www.drupal.org/project/webform_civicrm
+Documentation: https://docs.civicrm.org/webform-civicrm/en/latest
+
+**CiviCRM Entity module**
+Project page: https://www.drupal.org/project/civicrm_entity
+
 ## Trouble-shooting Resources {:#troubleshooting}
 
 * Review the [Troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.
