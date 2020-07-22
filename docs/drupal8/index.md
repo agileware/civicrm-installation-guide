@@ -95,7 +95,7 @@ There should now be a **CiviCRM** link in your Drupal menu. Click that link and 
 * [Project page on Drupal.org](https://www.drupal.org/project/webform_civicrm)
 * [Documentation on CiviCRM.org](https://docs.civicrm.org/webform-civicrm/en/latest)
 
-## CiviCRM Entity module
+### CiviCRM Entity module
 
 * [Project page on Drupal.org](https://www.drupal.org/project/civicrm_entity)
 
