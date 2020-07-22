@@ -18,10 +18,29 @@ To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.
     It is **strongly** recommended that you provide a version when requiring these libraries, as such our example command below will include, as an example, the version `5.27.1`. Note that installing ESR versions onto CiviCRM has not been tested at this time and as such no instructions for doing so are provided.
 
     Failure to provide a version will most likely result in you installing the `dev-master` version which is bleeding-edge code and may result in an unstable site/setup!
+
+!!! tip "Composer running out of memory?"
+    You may need to [increase composer's memory limit](https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors) in order to avoid out of memory errors.
+
+    Best practice is to use `composer require` locally or in dev/test and then deploy your `composer.lock` to staging and use `composer install` which requires less memory and implements the changes you've tested and committed to your repo!
 <!-- markdownlint-enable MD046 -->
 To require the CiviCRM libraries on a Drupal 8 site you can use the following one-line command:
 
 * `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.27.1'`
+
+!!! tip "Location, Location... Location"
+    You should always run `composer` commands from the top-level folder above the web and vendor folders, where in the same place as your `composer.json` file.
+
+You can also install CiviCRM by running these commands separately, this is what that looks like, along with a brief explanation of what each step is doing:
+
+1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.0.0'`
+1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.27,2'`
+1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.27.2'`
+1. Require the CiviCRM Drupal 8 integration code: `composer require civicrm/civicrm-drupal8:'~5.27.2'`
+
+Optionally you can also require the [`cv`](https://github.com/civicrm/cv) command-line helper/interface for CiviCRM with:
+
+* `composer require civicrm/cv` - This will place the cv binary in `./vendor/bin/cv` relative to your `composer.json` file.
 
 ## Install localization files (only for non-English sites) {:#i18n}
 
