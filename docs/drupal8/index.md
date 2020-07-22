@@ -10,37 +10,6 @@ This guide covers standard installation of CiviCRM for production use. For insta
 !!! warning "Composer install required!"
     This guide will assume that you have installed Drupal 8 using composer. At this time manual installation of Drupal 8 using zip or tarball install methods is not supported.
 
-## Determine Drupal Database Settings {:#db-settings}
-
-You will need to know the database settings for your Drupal installation prior to running the CiviCRM installer: You can look up these values in your Drupal `settings.php` file (located by default in your `<drupal_root>/sites/default directory`) be looking for the following code:
-
-```php
-$databases = array (
-  'default' =>
-  array (
-    'default' =>
-    array (
-      'database' => 'drupal',
-      'username' => 'dbuser',
-      'password' => 'dbpassword',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
-    ),
-  ),
-);
-```
-
-In the above example:
-
-| Setting                | Value      |
-| ---------------------- | ---------- |
-| Database Server        | localhost  |
-| Drupal Database Name   | drupal     |
-| Database User Name     | dbuser     |
-| Database User Password | dbpassword |
-
 ## Tell Drupal 8 where to find the CiviCRM Module {:#directory}
 
 To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.getcomposer.org) to `require` the CiviCRM libraries. We do this by requiring the `civicrm-core`, `civicrm-drupal-8`, `civicrm-packages` and `civicrm-asset-plugin` libraries.
