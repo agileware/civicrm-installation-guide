@@ -10,12 +10,13 @@ This guide covers standard installation of CiviCRM for production use. For insta
 !!! warning "Composer install required!"
     This guide will assume that you have installed Drupal 8 using composer. At this time manual installation of Drupal 8 using zip or tarball install methods is not supported.
 
-## Tell Drupal 8 where to find the CiviCRM Module {:#directory}
+## Downloading CiviCRM on Drupal 8 with Composer {:#downloading}
 
 To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.getcomposer.org) to `require` the CiviCRM libraries. We do this by requiring the `civicrm-core`, `civicrm-drupal-8`, `civicrm-packages` and `civicrm-asset-plugin` libraries.
+
 <!-- markdownlint-disable MD046 -->
 !!! tip "Versions!"
-    It is **strongly** recommended that you provide a version when requiring these libraries, as such our example command below will include, as an example, the version `5.27.1`. Note that installing ESR versions onto CiviCRM has not been tested at this time and as such no instructions for doing so are provided.
+    It is **strongly** recommended that you provide a version when requiring these libraries, as such our example command below will include, as an example, the version `5.27.2`. Note that installing ESR versions onto CiviCRM has not been tested at this time and as such no instructions for doing so are provided.
 
     Failure to provide a version will most likely result in you installing the `dev-master` version which is bleeding-edge code and may result in an unstable site/setup!
 
@@ -24,9 +25,14 @@ To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.
 
     Best practice is to use `composer require` locally or in dev/test and then deploy your `composer.lock` to staging and use `composer install` which requires less memory and implements the changes you've tested and committed to your repo!
 <!-- markdownlint-enable MD046 -->
+
+### Expert Mode - Just the install instructions
+
 To require the CiviCRM libraries on a Drupal 8 site you can use the following one-line command:
 
-* `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.27.1'`
+* `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.27.2'`
+
+### Guided Mode - More context and information
 
 !!! tip "Location, Location... Location"
     You should always run `composer` commands from the top-level folder above the web and vendor folders, where in the same place as your `composer.json` file.
@@ -40,20 +46,57 @@ You can also install CiviCRM by running these commands separately, this is what 
 
 Optionally you can also require the [`cv`](https://github.com/civicrm/cv) command-line helper/interface for CiviCRM with:
 
+!!! note ""
+    **Composer installs of cv are currently broken** for now use the [manual install steps](https://github.com/civicrm/cv#download).
+
 * `composer require civicrm/cv` - This will place the cv binary in `./vendor/bin/cv` relative to your `composer.json` file.
 
-## Install localization files (only for non-English sites) {:#i18n}
+## Install localization files (for sites needing languages other than US-English) {:#i18n}
 
 !!! warning "I18n & L10n on Drupal 8"
-    It's currently only possible to install CiviCRM in English (US) on Drupal 8 and adding the language files involves breaking with Composer best practices by writing the contents of the `civicrm-l10n` tarball into `vendor/civicrm/civicrm-core` or configuring the `civicrm.l10n` directory path after you install and placing the contents of the `civicrm-l10n` tarball into the configured directory.
+    If installing with the GUI it is currently only possible to install CiviCRM in English (US) on Drupal 8. Adding the language files involves breaking with Composer best practices by writing the contents of the `civicrm-l10n` tarball into `vendor/civicrm/civicrm-core` or configuring the `civicrm.l10n` directory path after you install and placing the contents of the `civicrm-l10n` tarball into the configured directory.
 
-## Run the Installer {:#installer}
+!!! error "Here Be Dragons..."
+    The following steps are provided as an example - they are not supported or widely tested and may leave your site in a broken state. You use them at your own risk. No. Seriously...
+
+    You will also have to repeat these steps **every** time you upgrade CiviCRM.
+
+The warnings above notwithstanding to install CiviCRM on Drupal 8 requires the following additional steps to prepare:
+
+1. Add [`cv`](https://github.com/civicrm/cv) to your Drupal 8 Site with: `composer require civicrm/cv` (**composer installs of cv are currently broken** for now use the [manual install steps](https://github.com/civicrm/cv#download).)
+1. Grab the localisation (*l10n*) files and unpack the `l10n` and `sql` subfolders into `vendor/civicrm/civicrm-core/`
+    * You'll find the l10n files on the [CiviCRM Download](https://civicrm.org/download) page or from `https://download.civicrm.org/civicrm-VERSION-l10n.tar.gz` where `VERSION` is a recent version of CiviCRM.
+
+    **Example:**
+
+    <!-- markdownlint-disable MD046 -->
+    ``` bash
+    wget https://download.civicrm.org/civicrm-5.27.2-l10n.tar.gz
+    tar -zxvf civicrm-5.27.2-l10n.tar.gz
+    cd civicrm/
+    cp -R l10n/ ../vendor/civicrm/civicrm-core/
+    cp -R sql/ ../vendor/civicrm/civicrm-core/
+    cd ..
+    rm -rf civicrm/
+    ```
+    <!-- markdownlint-enable MD046 -->
+
+1. If you've done this correctly, you should end up with `vendor/civicrm/civicrm-core/l10n` and `vendor/civicrm/civicrm-core/sql/`
+    * You can remove any languages you don't need by deleting them before copying the `l10n` and `sql` folders.
+
+Now we move onto [Installing CiviCRM - Command line install](#installing-commandline)
+
+## Installing CiviCRM {:#installing}
+
+### GUI install {:#installing-gui}
+
 <!-- markdownlint-disable MD046 -->
 !!! warning "Write permissions"
     It is critical that your web-server user is able to write to the `web/sites/default/` directory in order to create `civicrm.settings.php` and that you have an appropriate value for execution time(s) and memory limit(s) as any interruption to the installer can (and will) result in an unusable install and require remedial steps to correct or a full reinstall! By default on Drupal 8.8+ this directory path is not writable by default, before installing you should ensure you grant write access to your web server user. With, e.g: `sudo chmod u+w web/sites/default`.
 
     For multisite installations you'll also need to ensure your web server user has write access to additional sites e.g: `sudo chmod u+w web/sites/site2.example.org`.
 <!-- markdownlint-enable MD046 -->
+
 * Login to your Drupal site with Administrator level permissions.
 * Proceed to **Manage >> Extend** or point your web browser to the following URL:
 
@@ -63,6 +106,29 @@ Optionally you can also require the [`cv`](https://github.com/civicrm/cv) comman
 
     !!! tip "Where Should I Store CiviCRM Data?"
         CiviCRM on Drupal 8 can only install into your existing Drupal 8 database. However using a separate database is generally preferred - as it makes backups and upgrades easier. If you want to use a separate CiviCRM database you'd need to create the CiviCRM database manually and move the `civicrm_` tables into the new CiviCRM database, then update `civicrm.settings.php` with the new database details.
+
+### Command line install {:installing-commandline}
+
+!!! note "Prerequisites"
+    The steps below assume that you have the prerequisites for a command line install, namely cv or some other tested command-line installer for Drupal 8 (**Hint:** There's only one of those at the moment and it's cv)
+
+Make sure you're in the root directory for your Drupal 8 / CiviCRM site (the same folder/directory that holds `composer.json`).
+
+The essence of a cv install command looks like this `cv core:install -vv --cms-base-url="https://urltocms.example.org" --db="mysql://database:details@go/here:3306" --lang="en_GB"` there are many parameters available. <!-- META:To-Do Document cv usage -->
+
+For our CiviCRM install on Drupal 8 we want a command that looks like this:
+
+<!-- markdownlint-disable MD046 -->
+``` bash
+cv core:install -vv --db="DATABASE" --cms-base-url="URL" --lang="LANG"
+```
+<!-- markdownlint-enable MD046 -->
+
+Replace `cv` with the path to the cv phar on your system if appropriate. The parts in `CAPS` above will need to be replaced with your site-specific information as follows:
+
+* `DATABASE` (required) is the [DSN](https://en.wikipedia.org/wiki/Data_source_name) for the database where you want CiviCRM installed.
+* `URL` (required) is the canonical URL to the root of your CMS site.
+* `LANG` (optional) is one of the supported languages for CiviCRM - it **must** exist in your `l10n` folder.
 
 ## Review Permissions {:#permissions}
 
@@ -75,6 +141,7 @@ Optionally you can also require the [`cv`](https://github.com/civicrm/cv) comman
 * Go to **Administer » User management » Permissions**
 
 * Verify that the Roles that you want to have access to CiviCRM have the appropriate permissions checked. CiviCRM is installed with a number of fixed permissions (such as "edit contacts" and "administer CiviCRM").
+
 <!-- markdownlint-disable MD046 -->
 !!! tip "Permissions for the Anonymous Role"
     Many sites want anonymous visitors to have access to certain CiviCRM functionality. These permissions are enabled during installation for the Anonymous role. You should review them and modify if needed based on your requirements:
@@ -87,6 +154,7 @@ Optionally you can also require the [`cv`](https://github.com/civicrm/cv) comman
     * **view event info** and **register for events** : If you plan to use CiviEvent and want to allow un-authenticated visitors to view event information and register for events online - enable these permissions for the "anonymous" role.
     * **view event participants** : Enable this permission to allow anonymous users to access participant listing pages for events.
 <!-- markdownlint-enable MD046 -->
+
 ## Create CiviCRM Contacts for Existing Drupal Users {:#contacts-users}
 
 Once installed, CiviCRM keeps your Drupal Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each Drupal user record. Conversely, only contacts who are authenticated users of your site will have corresponding Drupal user records.
@@ -101,7 +169,7 @@ When CiviCRM is installed on top of an existing Drupal site, a special CiviCRM A
 
 ## Review the Configuration Checklist {:#checklist}
 
-The **Configuration Checklist** provides a convenient way to work through the settings that need to be reviewed and configured for a new site. You can link to this checklist from the installation success page AND you can visit it at any time from **Administer** » **Administration Console** » **Configuration Checklist**.
+The **Configuration Checklist** provides a convenient way to work through the settings that need to be reviewed and configured for a new site. You can link to this checklist from the installation success page and you can visit it at any time from **Administer** » **Administration Console** » **Configuration Checklist**.
 
 ## Test-drive CiviCRM {:#test-drive}
 
