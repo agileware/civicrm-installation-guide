@@ -109,8 +109,15 @@ Now we move onto [Installing CiviCRM - Command line install](#installing-command
 
 ### Command line install {:installing-commandline}
 
+<!-- markdownlint-disable MD046 -->
 !!! note "Prerequisites"
     The steps below assume that you have the prerequisites for a command line install, namely cv or some other tested command-line installer for Drupal 8 (**Hint:** There's only one of those at the moment and it's cv)
+
+!!! warning "Write permissions"
+    It is critical that your web-server user is able to write to the `web/sites/default/` directory in order to create `civicrm.settings.php` and that you have an appropriate value for execution time(s) and memory limit(s) as any interruption to the installer can (and will) result in an unusable install and require remedial steps to correct or a full reinstall! By default on Drupal 8.8+ this directory path is not writable by default, before installing you should ensure you grant write access to your web server user. With, e.g: `sudo chmod u+w web/sites/default`.
+
+    For multisite installations you'll also need to ensure your web server user has write access to additional sites e.g: `sudo chmod u+w web/sites/site2.example.org`.
+<!-- markdownlint-enable MD046 -->
 
 Make sure you're in the root directory for your Drupal 8 / CiviCRM site (the same folder/directory that holds `composer.json`).
 
