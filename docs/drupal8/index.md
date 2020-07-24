@@ -191,6 +191,77 @@ The **Configuration Checklist** provides a convenient way to work through the se
 
 There should now be a **CiviCRM** link in your Drupal menu. Click that link and the CiviCRM Menu, Shortcuts, Search and New Individual Blocks should appear. You can now explore CiviCRM end-user features and begin configuring CiviCRM for your site/organization needs.
 
+## Using Encryption with MySQL
+
+If your MySQL database is hosted on a different machine than your web server, or if your host requires it, you can use TLS to encrypt the connection between the database and the web server.
+
+Full instructions on installing drupal are out of scope for this guide, but one method is to install into a test database first without MySQL encryption and then move the database to the live server and update settings.php to enable MySQL encryption.
+
+See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the settings for the CiviCRM database. For the Drupal database you have several options for updating settings.php:
+
+1. The simplest, which doesn't require a client certificate, but doesn't verify the server certificate.
+
+    ``` php
+    $databases = array (
+      'default' =>
+      array (
+        'default' =>
+        array (
+          'database' => 'drupal',
+          'username' => 'dbuser',
+          'password' => 'dbpassword',
+          'host' => 'db435.examplehost.com',
+          'port' => '',
+          'driver' => 'mysql',
+          'prefix' => '',
+          'pdo' => array(
+              PDO::MYSQL_ATTR_SSL_CA => TRUE,
+              PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => FALSE,
+          ),
+        ),
+      ),
+    );
+    ```
+
+2. Verifies the server certificate, and doesn't require a client certificate.
+
+    !!! warning "Host name must match certificate name"
+        Note that the DATABASE SERVER certificate would have to have a CN (common name field) that matches exactly the `host` you are using in `$databases['default']['default']['host']`. So if the host is `db435.examplehost.com`, then that must be the name on the SERVER certificate.
+
+    ``` php
+    'pdo' => array(
+        // A certificate authority bundle.
+        // If you are using a self-signed server certificate in a development
+        // or testing environment, then this would be the same as the server
+        // certificate.
+        PDO::MYSQL_ATTR_SSL_CA => '/path/to/ca.crt',
+    ),
+    ```
+
+3. Client certificate/key pair (not self-signed), and do not verify the server certificate.
+
+    ``` php
+    'pdo' => array(
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => FALSE,
+        PDO::MYSQL_ATTR_SSL_KEY => '/path/to/your.key',
+        PDO::MYSQL_ATTR_SSL_CERT => '/path/to/your.crt',
+    ),
+    ```
+
+4. Client certificate/key pair (could be self-signed), and verify the server certificate.
+
+    ``` php
+    'pdo' => array(
+        // The SSL_CA can be the same as your.crt if self-signed, but note
+        // that it would also have to be a certificate authority for the
+        // server certificate. Self-signed would only be for local
+        // development testing.
+        PDO::MYSQL_ATTR_SSL_CA => '/path/to/ca.crt',
+        PDO::MYSQL_ATTR_SSL_KEY => '/path/to/your.key',
+        PDO::MYSQL_ATTR_SSL_CERT => '/path/to/your.crt',
+    ),
+    ```
+
 ## D8 <-> CiviCRM Integration modules {:#integration-modules}
 
 ### Webform CiviCRM module
