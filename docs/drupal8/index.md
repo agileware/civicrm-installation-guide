@@ -26,7 +26,7 @@ To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.
     Best practice is to use `composer require` locally or in dev/test and then deploy your `composer.lock` to staging and use `composer install` which requires less memory and implements the changes you've tested and committed to your repo!
 <!-- markdownlint-enable MD046 -->
 
-### Expert Mode - Just the install instructions
+### Expert Mode - Just the command
 
 To require the CiviCRM libraries on a Drupal 8 site you can use the following one-line command:
 
@@ -105,7 +105,7 @@ Now we move onto [Installing CiviCRM - Command line install](#installing-command
 * Currently there is no interactive installer for CiviCRM on Drupal 8 and enabling the module in Drupal 8 will install CiviCRM into your existing Drupal 8 database.
 
     !!! tip "Where Should I Store CiviCRM Data?"
-        CiviCRM on Drupal 8 can only install into your existing Drupal 8 database. However using a separate database is generally preferred - as it makes backups and upgrades easier. If you want to use a separate CiviCRM database you'd need to create the CiviCRM database manually and move the `civicrm_` tables into the new CiviCRM database, then update `civicrm.settings.php` with the new database details.
+        [GUI installs](#installing-gui) of CiviCRM on Drupal 8 can only install into your existing Drupal 8 database. However using a separate database is generally preferred - as it makes backups and upgrades easier. If you want to install via the GUI **and** use a separate CiviCRM database you'd need to create the CiviCRM database manually and move the `civicrm_` tables into the new CiviCRM database, then update `civicrm.settings.php` with the new database details. If you want to install directly into a separate database see the [command line install](#installing-commandline) instructions.
 
 ### Command line install {:installing-commandline}
 
@@ -131,7 +131,7 @@ cv core:install -vv --db="DATABASE" --cms-base-url="URL" --lang="LANG"
 ```
 <!-- markdownlint-enable MD046 -->
 
-Replace `cv` with the path to the cv phar on your system if appropriate. The parts in `CAPS` above will need to be replaced with your site-specific information as follows:
+Replace `cv` with the path to the cv phar on your system if applicable. The parts in `CAPS` above will need to be replaced with your site-specific information as follows:
 
 * `DATABASE` (required) is the [DSN](https://en.wikipedia.org/wiki/Data_source_name) for the database where you want CiviCRM installed.
 * `URL` (required) is the canonical URL to the root of your CMS site.

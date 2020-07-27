@@ -1,6 +1,6 @@
 ## Scope of this guide
 
-This guide is for people installing a [CiviCRM](https://civicrm.org) instance for an organization.
+This guide is for people installing a [CiviCRM](https://civicrm.org) instance for an organization. It will take you through downloading and installing CiviCRM on one of the supported Content Management Systems. It is not intended to provide information on installing the CMS itself.
 
 ### Installation Guide vs other guides
 
