@@ -40,7 +40,7 @@ To require the CiviCRM libraries on a Drupal 8 site you can use the following on
 You can also install CiviCRM by running these commands separately, this is what that looks like, along with a brief explanation of what each step is doing:
 
 1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.0.0'`
-1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.27,2'`
+1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.28'`
 1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.27.2'`
 1. Require the CiviCRM Drupal 8 integration code: `composer require civicrm/civicrm-drupal8:'~5.27.2'`
 
