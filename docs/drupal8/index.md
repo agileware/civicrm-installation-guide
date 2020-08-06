@@ -30,7 +30,7 @@ To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.
 
 To require the CiviCRM libraries on a Drupal 8 site you can use the following one-line command:
 
-* `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.27.2'`
+* `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.28'`
 
 ### Guided Mode - More context and information
 
@@ -40,9 +40,12 @@ To require the CiviCRM libraries on a Drupal 8 site you can use the following on
 You can also install CiviCRM by running these commands separately, this is what that looks like, along with a brief explanation of what each step is doing:
 
 1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.0.0'`
-1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.27,2'`
-1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.27.2'`
-1. Require the CiviCRM Drupal 8 integration code: `composer require civicrm/civicrm-drupal8:'~5.27.2'`
+1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.28'`
+1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.28'`
+1. Require the CiviCRM Drupal 8 integration code: `composer require civicrm/civicrm-drupal8:'~5.28'`
+
+!!! note "pear/exception conflict"
+    If you get an error message from composer when trying to install CiviCRM that there is a conflict in requirements for the package pear/exception. Then run the following command: `composer require pear/exception 1.0.1 as 1.0.0` before trying to run the command in step 3 above.
 
 Optionally you can also require the [`cv`](https://github.com/civicrm/cv) command-line helper/interface for CiviCRM with:
 
