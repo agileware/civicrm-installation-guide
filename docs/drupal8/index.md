@@ -30,7 +30,7 @@ To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.
 
 To require the CiviCRM libraries on a Drupal 8 site you can use the following one-line command:
 
-* `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.27.2'`
+* `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.28'`
 
 ### Guided Mode - More context and information
 
