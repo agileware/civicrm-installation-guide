@@ -48,13 +48,13 @@ It is also important to ensure that the same PHP extensions/modules are loaded o
 
 ### PHP Version
 
-| | CiviCRM 5.21 ESR | CiviCRM 5.x.x stable |
+| | CiviCRM 5.27 ESR | CiviCRM 5.x.x stable |
 | ---- | ---- | ---- |
 | PHP 7.4 | **incompatible** | Testing has shown that as of CiviCRM 5.28 can be run but issues are still being worked on in this [lab issue](https://lab.civicrm.org/dev/core/-/issues/1496) |
 | PHP 7.3 | compatible and **recommended** | compatible and **recommended** |
 | PHP 7.2 | compatible and **recommended** - but see note below about resaving the SMTP password | compatible and **recommended** but see note below about resaving the SMTP password |
 | PHP 7.1 | compatible but **not recommended** due to to [PHP end-of life](http://php.net/eol.php) in Dec 2019 | compatible but **not recommended** due to to [PHP end-of life](http://php.net/eol.php) in Dec 2019 |
-| PHP 7.0 | compatible but **not recommended** due to to [PHP end-of life](http://php.net/eol.php) in Dec 2018   | incompatible as of 5.25.0 |
+| PHP 7.0 | **incompatible** | incompatible as of 5.25.0 |
 | PHP 5.6 | **incompatible** | **incompatible** |
 
 ### PHP Extensions
@@ -99,7 +99,7 @@ Other database servers (such as PostgreSQL) are not compatible with CiviCRM.
 
 ### MySQL Version
 
-Your MySQL version should be **5.7.5 or greater** or MariaDB **10.0.2 or greater**.  As of version 5.26 the minimum install version for CiviCRM is 5.5, users on versions before that are advised to upgrade their MySQL instance to a recommended version. CiviCRM may not run correctly on MySQL 5.5 and/or 5.6 as these versions don't support some of the functionality CiviCRM uses to ensure that database actions don't compete for the same resources.
+Your MySQL version should be **5.7.5 or greater** or MariaDB **10.0.2 or greater**.  As of version 5.28 the minimum install version for CiviCRM is 5.6 users on versions before that are advised to upgrade their MySQL instance to a recommended version. CiviCRM may not run correctly on MySQL 5.6 as these versions don't support some of the functionality CiviCRM uses to ensure that database actions don't compete for the same resources.
 
 #### MySQL 8
 
