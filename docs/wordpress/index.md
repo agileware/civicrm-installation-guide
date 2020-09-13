@@ -183,7 +183,7 @@ There should now be a **CiviCRM** link in your WordPress menu. Click that link a
 
 If your MySQL database is hosted on a different machine than your web server, or if your host requires it, you can use TLS to encrypt the connection between the database and the web server.
 
-See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the settings for the CiviCRM database. For the Wordpress database you can add the following line to wp-config.php:
+See [TLS for MySQL](../general/mysql_tls.md) for introductory concepts and the settings for the CiviCRM database. For the Wordpress database you can add the following line to wp-config.php:
 
 * `define('MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL);`
 
