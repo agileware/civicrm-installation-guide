@@ -33,7 +33,7 @@ To require the CiviCRM libraries on a Drupal 8 site you can use the following on
 ??? note "Enabling Patching for composer libraries"
     You should make sure that before running this line that you either modify the composer.json file to include the parameter `"enable-patching": true` in the extra section or run `composer config 'extra.enable-patching' true` as per the [composer-patches documentation](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies). This isn't necessary immediately but from CiviCRM 5.30 it will be required for CiviCRM to function correctly.
 
-* `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.28'`
+* `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.29'`
 
 ### Guided Mode - More context and information
 
@@ -46,9 +46,9 @@ To require the CiviCRM libraries on a Drupal 8 site you can use the following on
 You can also install CiviCRM by running these commands separately, this is what that looks like, along with a brief explanation of what each step is doing:
 
 1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.0.0'`
-1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.28'`
-1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.28'`
-1. Require the CiviCRM Drupal 8 integration code: `composer require civicrm/civicrm-drupal8:'~5.28'`
+1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.29'`
+1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.29'`
+1. Require the CiviCRM Drupal 8 integration code: `composer require civicrm/civicrm-drupal-8:'~5.29'`
 
 !!! note "pear/exception conflict"
     If you get an error message from composer when trying to install CiviCRM that there is a conflict in requirements for the package pear/exception. Then run the following command: `composer require pear/exception 1.0.1 as 1.0.0` before trying to run the command in step 3 above.
