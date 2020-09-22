@@ -9,7 +9,7 @@
 
     If you plan to develop patches for CiviCRM on Drupal 7, then please use the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
-## Determine Drupal Database Settings {:#db-settings}
+## Identify the database {:#db-settings}
 
 You will need to know the database settings for your Drupal installation prior to running the CiviCRM installer: You can look up these values in your Drupal `settings.php` file (located by default in your `<drupal_root>/sites/default directory`) be looking for the following code:
 
