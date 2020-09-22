@@ -116,6 +116,46 @@ Your MySQL version should be **5.7.5 or greater** or MariaDB **10.0.2 or greater
 
 As of version 5.24 CiviCRM has been shown to be able to run on MySQL 8 through the execution of our test matrix. Not all of the Content Management Systems support MySQL 8, CiviCRM MySQL 8 support is being tracked in this [open issue for MySQL 8 support](https://lab.civicrm.org/dev/core/issues/392). It is also worth knowing that both [Backdrop](https://forum.backdropcms.org/forum/installing-backdrop-1126-mysql-8-sqlmode-cant-be-set-value-noautocreateuser) and [Drupal 7](https://www.drupal.org/project/drupal/issues/2978575) have open issues with regards to MySQL 8 support. [Drupal 8](https://www.drupal.org/docs/8/system-requirements/database-server) [supports MySQL 8 as of version 8.6](https://www.drupal.org/project/drupal/issues/2966523), Current versions of WordPress and [Joomla](https://docs.joomla.org/Joomla_and_MySQL_8) appear to be compatible with MySQL 8
 
+### MySQL Connection {:#mysql-connection}
+
+By default, new installations of CiviCRM will copy the MySQL connection details from the CMS, creating a shared database.  It is also possible to
+install CiviCRM on a separate database. As a rule of thumb:
+
+* *A shared database* works well for small deployments (eg a few thousand records and a single administrator or developer).
+* *Separate databases* work well for large deployments (eg a million records and multiple administrators/developers).
+
+If you are unsure which style fits better, consider some trade-offs:
+
+* _Initial setup_: The shared database can be setup automatically. To use a separate database, you must create the second one.
+* _"Views" integration_: On Drupal 7 / Backdrop, the "Views" integration can query MySQL data from both
+  CMS and Civi. This works easily with a shared database, but it requires effort with separate databases.
+* _Backups_: If you have a small data-set and a good backup mechanism, the shared database is easier to backup --
+  it's only one job.
+* _Large datasets_: If the CMS dataset and Civi dataset grow large (eg millions of records), then separating the
+  databases will allow better resource-management.
+* _Development/staging process_: If you have different people working on the system code or system configuration,
+  then they may need to work with different subsets of the data. (Ex: A theme developer may need access to
+  the CMS data but not the Civi data. For an application developer, that could be reversed.) With separate
+  databases, it may be easier to negotiate the workflow.
+
+If your choose to use separate databases, then you need connection details for the second database. Connections are represented in URL format. For example:
+
+```
+mysql://dbuser:dbpassword@localhost:3306/dbname
+```
+
+The example URL captures several pieces of information:
+
+| Setting | Example Value |
+| ------- | ----- |
+| Database User Name | `dbuser` |
+| Database User Password | `dbpassword` |
+| Database Server | `localhost` |
+| Database Port | `3306` |
+| Database Name | `dbname` |
+
+Additional URL parameters may be added to support [MySQL with TLS](mysql_tls.md).
+
 ### MySQL Configuration
 
 * Support for the `innodb` storage engine is required.
