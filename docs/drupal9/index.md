@@ -1,3 +1,9 @@
+!!! warning "Experimental documentation"
+
+    This document discusses a new deployment environment. It is closesly based on the Drupal 8
+    document, but it has not been carefully reviewed/tested. Consequently, it is not linked in
+    the main menu.
+
 ## Scope of this guide and alternative installation methods
 
 This guide covers standard installation of CiviCRM for production use. For installing a development environment, refer to the [section on Buildkit in the Developer Documentation](https://docs.civicrm.org/dev/en/latest/tools/buildkit/).
