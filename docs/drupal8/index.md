@@ -146,6 +146,16 @@ Replace `cv` with the path to the cv phar on your system if applicable. The part
 * `URL` (required) is the canonical URL to the root of your CMS site.
 * `LANG` (optional) is one of the supported languages for CiviCRM - it **must** exist in your `l10n` folder.
 
+#### Installing Sample Data {:#sampledata}
+
+Currently you can only install sample data using the command line and the `-m` flag to set the `loadGenerated` option. Example:
+
+<!-- markdownlint-disable MD046 -->
+``` bash
+cv core:install -vv --cms-base-url="URL" -m loadGenerated=1
+```
+<!-- markdownlint-enable MD046 -->
+
 ## Review Permissions {:#permissions}
 
 !!! note ""
