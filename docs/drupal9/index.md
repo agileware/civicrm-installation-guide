@@ -37,7 +37,7 @@ To download CiviCRM on a Drupal 9 site we'll need to ask [Composer](https://www.
     Best practice is to use `composer require` locally or in dev/test and then deploy your `composer.lock` to staging and use `composer install` which requires less memory and implements the changes you've tested and committed to your repo!
 <!-- markdownlint-enable MD046 -->
 
-### Expert Mode - Just the command
+### Expert mode - Just the command
 
 To require the CiviCRM libraries on a Drupal 9 site you can use the following one-line command:
 
@@ -46,7 +46,7 @@ To require the CiviCRM libraries on a Drupal 9 site you can use the following on
 
 * `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.28'`
 
-### Guided Mode - More context and information
+### Guided mode - More context and information
 
 !!! tip "Location, Location... Location"
     You should always run `composer` commands from the top-level folder above the web and vendor folders, where in the same place as your `composer.json` file.
@@ -275,7 +275,7 @@ See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the setti
     ),
     ```
 
-### D8 <-> CiviCRM Integration modules {:#integration-modules}
+### Integration modules {:#integration-modules}
 
 __Webform CiviCRM module__
 
