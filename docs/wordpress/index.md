@@ -171,7 +171,7 @@ When CiviCRM is installed on top of an existing WordPress site, a special CiviCR
 * Click **Administer** in the menu bar
 * Click **Users and Permissions** from the drop-down menu, then select **Synchronize Users to Contacts**.
 
-## Review the Configuration Checklist
+## Review the checklist {:#checklist}
 
 The **Configuration Checklist** provides a convenient way to work through the settings that need to be reviewed and configured for a new site. You can link to this checklist from the installation success page AND you can visit it at any time from **Administer** » **Administration Console** » **Configuration Checklist**.
 
