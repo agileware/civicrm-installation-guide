@@ -152,7 +152,7 @@ Replace `cv` with the path to the cv phar on your system if applicable. The part
 * `URL` (required) is the canonical URL to the root of your CMS site.
 * `LANG` (optional) is one of the supported languages for CiviCRM - it **must** exist in your `l10n` folder.
 
-## Review Permissions {:#permissions}
+## Review the permissions {:#permissions}
 
 !!! note ""
     Drupal will create the `/files/` directory (and make it writeable), but only when saving `admin/settings`. Same holds for `/temp` directory, and a `/uploads/` directory in the CiviCRM module root. On a brand-new Drupal install, this directory may be missing. Even on an existing installation, if file permissions are not set properly, the directory may be missing. If enabling the **CiviCRM** module generates errors regarding the files directory, you must create it (writeable) manually.

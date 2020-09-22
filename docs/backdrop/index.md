@@ -85,7 +85,7 @@ The installer will verify that you've downloaded the correct version of CiviCRM,
       even after changing directory permission in Explorer, see [the permissions page](../general/permissions.md) for instructions on how to set permissions on Linux, MacOS and Windows.
     * Once you see the green "You're ready to install!" message - you can click **Check Requirements and Install CiviCRM**
 
-## Review Permissions {:#permissions}
+## Review the permissions {:#permissions}
 
 !!! check ""
     Note that Backdrop tries to create the `/files/` directory (and make it writeable), but only when saving `admin/settings`. Same holds for `/temp` directory, and a `/uploads/` directory in the CiviCRM module root. On a brand-new Backdrop install, this directory may be missing. Even on an existing installation, if file permissions are not set properly, the directory may be missing. If enabling the **CiviCRM** module generates errors regarding the files directory, you must create it (writeable) manually.
