@@ -284,6 +284,6 @@ See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the setti
 
 * [Project page on Drupal.org](https://www.drupal.org/project/civicrm_entity)
 
-## Troubleshooting Resources {:#troubleshooting}
+## Troubleshooting {:#troubleshooting}
 
 * Review the [Troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.

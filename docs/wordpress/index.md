@@ -187,6 +187,6 @@ See [TLS for MySQL](../general/mysql_tls.md) for introductory concepts and the s
 
 * `define('MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL);`
 
-## Troubleshooting Resources {:#troubleshooting}
+## Troubleshooting {:#troubleshooting}
 
 * Review the [troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.

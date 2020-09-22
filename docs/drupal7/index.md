@@ -202,7 +202,7 @@ See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the setti
     ),
     ```
 
-## Trouble-shooting Resources {:#troubleshooting}
+## Troubleshooting {:#troubleshooting}
 
 * Review the [Troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.
 * To check compatibility with other Drupal modules see: [Drupal modules incompatible with CiviCRM](https://docs.civicrm.org/sysadmin/en/latest/integration/drupal/incompatibilities/)

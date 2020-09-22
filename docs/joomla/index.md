@@ -45,7 +45,7 @@ When CiviCRM is installed on top of an existing Joomla site, a special CiviCRM A
 * Click the **Components > CiviCRM > CiviCRM Home** link in the main navigation block
 * Click **Administer > Users and Permissions > Synchronize Users-to-Contacts**
 
-## Troubleshooting Resources {:#troubleshooting}
+## Troubleshooting {:#troubleshooting}
 
 * If the CiviCRM component does not install correctly (for example you get a blank screen instead of the confirmation page), delete the `~/components/com_civicrm` and `~/administrator/components/com_civicrm` and `~/media/civicrm directories` manually and then try each of the following before attempting to reinstall:
 
