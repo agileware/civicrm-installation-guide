@@ -9,37 +9,6 @@
 
     If you plan to develop patches for CiviCRM on Drupal 7, then please use the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
-## Identify the database {:#db-settings}
-
-You will need to know the database settings for your Drupal installation prior to running the CiviCRM installer: You can look up these values in your Drupal `settings.php` file (located by default in your `<drupal_root>/sites/default directory`) be looking for the following code:
-
-```php
-$databases = array (
-  'default' =>
-  array (
-    'default' =>
-    array (
-      'database' => 'drupal',
-      'username' => 'dbuser',
-      'password' => 'dbpassword',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
-    ),
-  ),
-);
-```
-
-In the above example:
-
-| Setting                | Value      |
-| ---------------------- | ---------- |
-| Database Server        | localhost  |
-| Drupal Database Name   | drupal     |
-| Database User Name     | dbuser     |
-| Database User Password | dbpassword |
-
 <a name="directory"></a><!-- old anchor -->
 ## Get the code {:#download}
 

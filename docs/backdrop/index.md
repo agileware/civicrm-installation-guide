@@ -9,35 +9,6 @@
 
     If you plan to develop patches for CiviCRM on WordPress, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
-## Identify the database {:#db-settings}
-
-You will need to know the database settings for your Backdrop installation prior to running the CiviCRM installer. You can look up these values in your Backdrop `settings.php` file (located in your Backdrop root) be looking for the following code:
-
-``` php
-$db_url = 'mysql://dbuser:dbpassword@localhost/backdrop';
-```
-
-or
-
-``` php
-$databases['default']['default'] = array(
-  'driver' => 'mysql',
-  'database' => 'database_name',
-  'username' => 'dbuser',
-  'password' => 'dbpassword',
-  'host' => 'localhost',
-);
-```
-
-In the above example:
-
-| Setting | Value |
-| ------- | ----- |
-| Database Server | localhost |
-| Backdrop Database Name | backdrop |
-| Database User Name | dbuser |
-| Database User Password | dbpassword |
-
 <a name="directory"></a><!-- old anchor -->
 ## Get the code {:#download}
 
