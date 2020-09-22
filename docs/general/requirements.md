@@ -4,6 +4,17 @@ Ensure that your system meets the following requirements before installing or up
 
 If you are curious what technologies other organizations are using to run CiviCRM, you can look at the [CiviCRM Stats](https://stats.civicrm.org/?tab=technology).
 
+## Summary {:#summary}
+
+A recommended server environment should typically meet these guidelines:
+
+* __Operating system__: Linux
+* __CMS__: Backdrop, Drupal 7, Drupal 8, Joomla, or WordPress
+* __PHP__: 7.2 or 7.3 -- with configuration and extension requirements
+* __MySQL__: MySQL 5.7+ or MariaDB 10.0+ -- with configuration requirements
+
+Other environments may also meet the system requirements. The following sections present requirements more precisely.
+
 ## Server Environment {:#server}
 
 ### Operating System {:#os}
