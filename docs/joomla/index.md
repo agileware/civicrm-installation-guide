@@ -20,7 +20,7 @@ All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are inclu
 
 Note: when installing a new version over an old one, please first check [troubleshooting resources](#troubleshooting) below.
 
-## Run the Installer {:#installer}
+## Run the installer {:#installer}
 
 * Login to your Joomla Administrator site.
 * Go to **Extensions >> Install/Uninstall**.

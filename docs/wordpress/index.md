@@ -56,7 +56,7 @@ All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are inclu
 
 The basic CiviCRM release includes support for US English (`en_US`). To use another language or dialect, please [download and extract the translation files](../general/i18n_l10n.md).
 
-## Enable CiviCRM plugin and run installer
+## Run the installer
 
 The installer will verify that you've downloaded the correct version of CiviCRM, and will check your server environment to make sure it meets CiviCRM requirements. It will then create and populate a database for CiviCRM as well as create your CiviCRM settings file `civicrm.settings.php`.
 
