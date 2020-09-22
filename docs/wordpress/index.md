@@ -97,15 +97,17 @@ The installer will verify that you've downloaded the correct version of CiviCRM,
         even after changing directory permission in Explorer, see [the permissions page](../general/permissions.md) for instructions on how to set permissions on Linux, MacOS and Windows.
     * Once you see the green "You're ready to install!" message - you can click **Check Requirements and Install CiviCRM**
 
-## Locate and Backup the CiviCRM settings file
+## Backup the settings file
 
-After installation, a configuration file will have been created by CiviCRM at: `<wordpress>/wp-content/uploads/civicrm/civicrm.settings.php`
+The installer created a configuration file at `<wordpress>/wp-content/uploads/civicrm/civicrm.settings.php`
 
 It is critical you make a copy of this file and save as a backup in a safe location. This file contains passwords and other critical information, take precautions to secure the copy from prying eyes.
 
 Should an upgrade fail, you will need this backup copy to restore your site.
 
-## Enabling Cleaner URLs for WordPress
+<!-- Is the above still true for new installations in Civi 4.7/5.x? Makes sense if 4.6, which bizarrely placed the config-file in the code-directory.But in 4.7+?? -->
+
+## Enable clean URLs
 
 * Starting in Version 5.13.x CiviCRM now can support "Clean URLs" for WordPress front-end (user-facing) pages.
 * By default CiviCRM URLs are in the format of `https://example.org/civicrm?page=CiviCRM&q=civicrm/contribute/transact&reset=1&id=1` for a Contribution Page. With clean URLs enabled:
