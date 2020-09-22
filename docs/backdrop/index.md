@@ -129,7 +129,9 @@ The **Configuration Checklist** provides a convenient way to work through the se
 
 There should now be a **CiviCRM** link in your Backdrop menu. Click that link and the CiviCRM Menu, Shortcuts, Search and New Individual Blocks should appear. You can now explore CiviCRM end-user features and begin configuring CiviCRM for your site/organization needs.
 
-## Using Encryption with MySQL
+## Addenda
+
+### TLS for MySQL
 
 If your MySQL database is hosted on a different machine than your web server, or if your host requires it, you can use TLS to encrypt the connection between the database and the web server.
 
@@ -200,6 +202,6 @@ See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the setti
     ),
     ```
 
-## Troubleshooting {:#troubleshooting}
+### Troubleshooting {:#troubleshooting}
 
 * Review the [Troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.
