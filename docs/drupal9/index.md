@@ -4,14 +4,16 @@
     document, but it has not been carefully reviewed/tested. Consequently, it is not linked in
     the main menu.
 
-## Scope of this guide and alternative installation methods
+!!! tldr "About this document"
 
-This guide covers standard installation of CiviCRM for production use. For installing a development environment, refer to the [section on Buildkit in the Developer Documentation](https://docs.civicrm.org/dev/en/latest/tools/buildkit/).
+    This guide covers standard installation of CiviCRM on an existing Drupal 9 site. It assumes that you previously completed these tasks:
 
-## Before installing
+    1. Install Drupal 9, and...
+    1. [Review the CiviCRM requirements](../general/requirements.md)
 
-1. Ensure that your system meets the [requirements](../general/requirements.md).
-1. Install Drupal 9 by referring to the [Drupal 8 Installation Guide](https://www.drupal.org/docs/8/install) if needed.
+!!! tldr "Similar alternatives"
+
+    If you plan to develop patches for CiviCRM on Drupal 9, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
 !!! warning "Composer install required!"
     This guide will assume that you have installed Drupal 9 using composer. At this time manual installation of Drupal 8 using zip or tarball install methods is not supported.

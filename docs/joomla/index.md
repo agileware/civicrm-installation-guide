@@ -1,11 +1,9 @@
-## Scope of this guide and alternative installation methods
+!!! tldr "About this document"
 
-This guide covers standard installation of CiviCRM for production use. For installing a development environment, refer to the [section on Buildkit in the Developer Documentation](https://docs.civicrm.org/dev/en/latest/tools/buildkit/).
+    This guide covers standard installation of CiviCRM on an existing Joomla site. It assumes that you previously completed these tasks:
 
-## Before installing
-
-1. Ensure that your system meets the [requirements](../general/requirements.md).
-1. Install Joomla by referring to the [Joomla Installation Guide](https://docs.joomla.org/J3.x:Installing_Joomla) if needed.
+    1. [Install Joomla](https://docs.joomla.org/J3.x:Installing_Joomla), and...
+    1. [Review the CiviCRM requirements](../general/requirements.md)
 
 !!! note "Path for Joomla"
     The rest of these instructions assume that you have Joomla installed in `/var/www/JOOMLA_ROOT`. Adjust paths as needed.
