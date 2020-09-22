@@ -101,9 +101,12 @@ The warnings above notwithstanding to install CiviCRM on Drupal 9 requires the f
 
 Now we move onto [Installing CiviCRM - Command line install](#installing-commandline)
 
-## Installing CiviCRM {:#installing}
+<a name="installing"></a>
+## Run the installer {:#installer}
 
-### GUI install {:#installing-gui}
+The installer prepares the database and configuration files.  You may run the installer through the web interface (which is simpler) or the command-line interface (which has more options).
+
+### Web installer {:#installing-gui}
 
 <!-- markdownlint-disable MD046 -->
 !!! warning "Write permissions"
@@ -122,7 +125,7 @@ Now we move onto [Installing CiviCRM - Command line install](#installing-command
     !!! tip "Where Should I Store CiviCRM Data?"
         [GUI installs](#installing-gui) of CiviCRM on Drupal 9 can only install into your existing Drupal 8 database. However using a separate database is generally preferred - as it makes backups and upgrades easier. If you want to install via the GUI **and** use a separate CiviCRM database you'd need to create the CiviCRM database manually and move the `civicrm_` tables into the new CiviCRM database, then update `civicrm.settings.php` with the new database details. If you want to install directly into a separate database see the [command line install](#installing-commandline) instructions.
 
-### Command line install {:installing-commandline}
+### CLI installer {:installing-commandline}
 
 <!-- markdownlint-disable MD046 -->
 !!! note "Prerequisites"
