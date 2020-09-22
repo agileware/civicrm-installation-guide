@@ -1,16 +1,14 @@
-## Scope of this guide and alternative installation methods
+!!! tldr "About this document"
 
-This guide covers standard installation of CiviCRM for production use. For installing a development environment, refer to the [section on Buildkit in the Developer Documentation](https://docs.civicrm.org/dev/en/latest/tools/buildkit/).
+    This guide covers standard installation of CiviCRM on an existing Joomla site. It assumes that you previously completed these tasks:
 
-## Before installing
-
-1. Ensure that your system meets the [requirements](../general/requirements.md).
-1. Install Joomla by referring to the [Joomla Installation Guide](https://docs.joomla.org/J3.x:Installing_Joomla) if needed.
+    1. [Install Joomla](https://docs.joomla.org/J3.x:Installing_Joomla), and...
+    1. [Review the CiviCRM requirements](../general/requirements.md)
 
 !!! note "Path for Joomla"
     The rest of these instructions assume that you have Joomla installed in `/var/www/JOOMLA_ROOT`. Adjust paths as needed.
 
-## Download and Un-tar CiviCRM Code {:#download}
+## Get the code {:#download}
 
 All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are included in the compressed CiviCRM distribution files ('tarballs'). Follow these steps to download and install the codebase:
 
@@ -20,7 +18,7 @@ All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are inclu
 
 Note: when installing a new version over an old one, please first check [troubleshooting resources](#troubleshooting) below.
 
-## Run the Installer {:#installer}
+## Run the installer {:#installer}
 
 * Login to your Joomla Administrator site.
 * Go to **Extensions >> Install/Uninstall**.
@@ -35,7 +33,7 @@ Note: when installing a new version over an old one, please first check [trouble
 
     Note that missing PHP Zip functionality *will* prevent CiviCRM from installing extensions via the GUI.
 
-## Create CiviCRM Contacts for Existing Joomla Users {:#contacts-users}
+## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your Joomla Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each Joomla user record. Conversely, only contacts who are authenticated users of your site will have corresponding Joomla user records.
 
@@ -45,7 +43,9 @@ When CiviCRM is installed on top of an existing Joomla site, a special CiviCRM A
 * Click the **Components > CiviCRM > CiviCRM Home** link in the main navigation block
 * Click **Administer > Users and Permissions > Synchronize Users-to-Contacts**
 
-## Troubleshooting Resources {:#troubleshooting}
+## Addenda
+
+### Troubleshooting {:#troubleshooting}
 
 * If the CiviCRM component does not install correctly (for example you get a blank screen instead of the confirmation page), delete the `~/components/com_civicrm` and `~/administrator/components/com_civicrm` and `~/media/civicrm directories` manually and then try each of the following before attempting to reinstall:
 

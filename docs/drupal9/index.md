@@ -4,19 +4,22 @@
     document, but it has not been carefully reviewed/tested. Consequently, it is not linked in
     the main menu.
 
-## Scope of this guide and alternative installation methods
+!!! tldr "About this document"
 
-This guide covers standard installation of CiviCRM for production use. For installing a development environment, refer to the [section on Buildkit in the Developer Documentation](https://docs.civicrm.org/dev/en/latest/tools/buildkit/).
+    This guide covers standard installation of CiviCRM on an existing Drupal 9 site. It assumes that you previously completed these tasks:
 
-## Before installing
+    1. Install Drupal 9, and...
+    1. [Review the CiviCRM requirements](../general/requirements.md)
 
-1. Ensure that your system meets the [requirements](../general/requirements.md).
-1. Install Drupal 9 by referring to the [Drupal 8 Installation Guide](https://www.drupal.org/docs/8/install) if needed.
+!!! tldr "Similar alternatives"
+
+    If you plan to develop patches for CiviCRM on Drupal 9, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
 !!! warning "Composer install required!"
     This guide will assume that you have installed Drupal 9 using composer. At this time manual installation of Drupal 8 using zip or tarball install methods is not supported.
 
-## Downloading CiviCRM on Drupal 9 with Composer {:#downloading}
+<a name="downloading"></a><!-- old anchor -->
+## Get the code {:#download}
 
 To download CiviCRM on a Drupal 9 site we'll need to ask [Composer](https://www.getcomposer.org) to `require` the CiviCRM libraries. We do this by requiring the `civicrm-core`, `civicrm-drupal-8`, `civicrm-packages` and `civicrm-asset-plugin` libraries.
 
@@ -34,7 +37,7 @@ To download CiviCRM on a Drupal 9 site we'll need to ask [Composer](https://www.
     Best practice is to use `composer require` locally or in dev/test and then deploy your `composer.lock` to staging and use `composer install` which requires less memory and implements the changes you've tested and committed to your repo!
 <!-- markdownlint-enable MD046 -->
 
-### Expert Mode - Just the command
+### Expert mode - Just the command
 
 To require the CiviCRM libraries on a Drupal 9 site you can use the following one-line command:
 
@@ -43,7 +46,7 @@ To require the CiviCRM libraries on a Drupal 9 site you can use the following on
 
 * `composer require civicrm/civicrm-asset-plugin:'~1.0.0' civicrm/civicrm-{core,packages,drupal-8}:'~5.28'`
 
-### Guided Mode - More context and information
+### Guided mode - More context and information
 
 !!! tip "Location, Location... Location"
     You should always run `composer` commands from the top-level folder above the web and vendor folders, where in the same place as your `composer.json` file.
@@ -65,7 +68,7 @@ Optionally you can also require the [`cv`](https://github.com/civicrm/cv) comman
 
 * `composer require civicrm/cv` - This will place the cv binary in `./vendor/bin/cv` relative to your `composer.json` file.
 
-## Install localization files (for sites needing languages other than US-English) {:#i18n}
+## Get the translations {:#i18n}
 
 !!! warning "I18n & L10n on Drupal 9"
     If installing with the GUI it is currently only possible to install CiviCRM in English (US) on Drupal 9. Adding the language files involves breaking with Composer best practices by writing the contents of the `civicrm-l10n` tarball into `vendor/civicrm/civicrm-core` or configuring the `civicrm.l10n` directory path after you install and placing the contents of the `civicrm-l10n` tarball into the configured directory.
@@ -100,9 +103,12 @@ The warnings above notwithstanding to install CiviCRM on Drupal 9 requires the f
 
 Now we move onto [Installing CiviCRM - Command line install](#installing-commandline)
 
-## Installing CiviCRM {:#installing}
+<a name="installing"></a>
+## Run the installer {:#installer}
 
-### GUI install {:#installing-gui}
+The installer prepares the database and configuration files.  You may run the installer through the web interface (which is simpler) or the command-line interface (which has more options).
+
+### Web installer {:#installing-gui}
 
 <!-- markdownlint-disable MD046 -->
 !!! warning "Write permissions"
@@ -121,7 +127,7 @@ Now we move onto [Installing CiviCRM - Command line install](#installing-command
     !!! tip "Where Should I Store CiviCRM Data?"
         [GUI installs](#installing-gui) of CiviCRM on Drupal 9 can only install into your existing Drupal 8 database. However using a separate database is generally preferred - as it makes backups and upgrades easier. If you want to install via the GUI **and** use a separate CiviCRM database you'd need to create the CiviCRM database manually and move the `civicrm_` tables into the new CiviCRM database, then update `civicrm.settings.php` with the new database details. If you want to install directly into a separate database see the [command line install](#installing-commandline) instructions.
 
-### Command line install {:installing-commandline}
+### CLI installer {:installing-commandline}
 
 <!-- markdownlint-disable MD046 -->
 !!! note "Prerequisites"
@@ -151,7 +157,7 @@ Replace `cv` with the path to the cv phar on your system if applicable. The part
 * `URL` (required) is the canonical URL to the root of your CMS site.
 * `LANG` (optional) is one of the supported languages for CiviCRM - it **must** exist in your `l10n` folder.
 
-## Review Permissions {:#permissions}
+## Review the permissions {:#permissions}
 
 !!! note ""
     Drupal will create the `/files/` directory (and make it writeable), but only when saving `admin/settings`. Same holds for `/temp` directory, and a `/uploads/` directory in the CiviCRM module root. On a brand-new Drupal install, this directory may be missing. Even on an existing installation, if file permissions are not set properly, the directory may be missing. If enabling the **CiviCRM** module generates errors regarding the files directory, you must create it (writeable) manually.
@@ -176,7 +182,7 @@ Replace `cv` with the path to the cv phar on your system if applicable. The part
     * **view event participants** : Enable this permission to allow anonymous users to access participant listing pages for events.
 <!-- markdownlint-enable MD046 -->
 
-## Create CiviCRM Contacts for Existing Drupal Users {:#contacts-users}
+## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your Drupal Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each Drupal user record. Conversely, only contacts who are authenticated users of your site will have corresponding Drupal user records.
 
@@ -188,7 +194,7 @@ When CiviCRM is installed on top of an existing Drupal site, a special CiviCRM A
 * Click **Administer** in the menu bar
 * Click **Users and Permissions** from the drop-down menu, then select **Synchronize Users to Contacts**
 
-## Review the Configuration Checklist {:#checklist}
+## Review the checklist {:#checklist}
 
 The **Configuration Checklist** provides a convenient way to work through the settings that need to be reviewed and configured for a new site. You can link to this checklist from the installation success page and you can visit it at any time from **Administer** » **Administration Console** » **Configuration Checklist**.
 
@@ -196,7 +202,9 @@ The **Configuration Checklist** provides a convenient way to work through the se
 
 There should now be a **CiviCRM** link in your Drupal menu. Click that link and the CiviCRM Menu, Shortcuts, Search and New Individual Blocks should appear. You can now explore CiviCRM end-user features and begin configuring CiviCRM for your site/organization needs.
 
-## Using Encryption with MySQL
+## Addenda
+
+### TLS for MySQL
 
 If your MySQL database is hosted on a different machine than your web server, or if your host requires it, you can use TLS to encrypt the connection between the database and the web server.
 
@@ -267,17 +275,17 @@ See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the setti
     ),
     ```
 
-## D8 <-> CiviCRM Integration modules {:#integration-modules}
+### Integration modules {:#integration-modules}
 
-### Webform CiviCRM module
+__Webform CiviCRM module__
 
 * [Project page on Drupal.org](https://www.drupal.org/project/webform_civicrm)
 * [Documentation on CiviCRM.org](https://docs.civicrm.org/webform-civicrm/en/latest)
 
-### CiviCRM Entity module
+__CiviCRM Entity module__
 
 * [Project page on Drupal.org](https://www.drupal.org/project/civicrm_entity)
 
-## Troubleshooting Resources {:#troubleshooting}
+### Troubleshooting {:#troubleshooting}
 
 * Review the [Troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.

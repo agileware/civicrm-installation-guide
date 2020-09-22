@@ -1,13 +1,15 @@
-## Scope of this guide and alternative installation methods
+!!! tldr "About this document"
 
-This guide covers standard installation of CiviCRM for production use. For installing a development environment, refer to the [section on Buildkit in the Developer Documentation](https://docs.civicrm.org/dev/en/latest/tools/buildkit/).
+    This guide covers standard installation of CiviCRM on an existing Drupal 7 site. It assumes that you previously completed these tasks:
 
-## Before installing
+    1. [Install Drupal 7](https://www.drupal.org/docs/7/install), and...
+    1. [Review the CiviCRM requirements](../general/requirements.md)
 
-1. Ensure that your system meets the [requirements](../general/requirements.md).
-1. Install Drupal 7 by referring to the [Drupal 7 Installation Guide](https://www.drupal.org/docs/7/install) if needed.
+!!! tldr "Similar alternatives"
 
-## Determine Drupal Database Settings {:#db-settings}
+    If you plan to develop patches for CiviCRM on Drupal 7, then please use the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
+
+## Identify the database {:#db-settings}
 
 You will need to know the database settings for your Drupal installation prior to running the CiviCRM installer: You can look up these values in your Drupal `settings.php` file (located by default in your `<drupal_root>/sites/default directory`) be looking for the following code:
 
@@ -38,7 +40,8 @@ In the above example:
 | Database User Name     | dbuser     |
 | Database User Password | dbpassword |
 
-## Tell Drupal where to find the CiviCRM Module {:#directory}
+<a name="directory"></a><!-- old anchor -->
+## Get the code {:#download}
 
 First, download CiviCRM and install the files like you would any other module:
 
@@ -51,11 +54,11 @@ The most up-to-date version of CiviCRM is always available from the [CiviCRM web
 
 **Do NOT** activate the module yet - that will happen automatically when you run the installer.
 
-## Install localization files (only for non-English sites) {:#i18n}
+## Get the translations {:#i18n}
 
-If using CiviCRM in another language than English, see the [internationalisation and localisation](../general/i18n_l10n.md) page about how to install files for running CiviCRM in other languages.
+The basic CiviCRM release includes support for US English (`en_US`). To use another language or dialect, please [download and extract the translation files](../general/i18n_l10n.md).
 
-## Run the Installer {:#installer}
+## Run the installer {:#installer}
 
 The installer will verify that you've downloaded the correct version of CiviCRM, and will check your server environment to make sure it meets CiviCRM requirements. It will then create and populate a database for CiviCRM as well as create your CiviCRM settings file (civicrm.settings.php).
 
@@ -86,7 +89,7 @@ The installer will verify that you've downloaded the correct version of CiviCRM,
       even after changing directory permission in Explorer, see [the permissions page](../general/permissions.md) for instructions on how to set permissions on Linux, MacOS and Windows.
     * Once you see the green "You're ready to install!" message - you can click **Check Requirements and Install CiviCRM**
 
-## Review Permissions {:#permissions}
+## Review the permissions {:#permissions}
 
 !!! check ""
     Note that Drupal tries to create the `/files/` directory (and make it writeable), but only when saving `admin/settings`. Same holds for `/temp` directory, and a `/uploads/` directory in the CiviCRM module root. On a brand-new Drupal install, this directory may be missing. Even on an existing installation, if file permissions are not set properly, the directory may be missing. If enabling the **CiviCRM** module generates errors regarding the files directory, you must create it (writeable) manually.
@@ -109,7 +112,8 @@ The installer will verify that you've downloaded the correct version of CiviCRM,
     * **view event info** and **register for events** : If you plan to use CiviEvent and want to allow un-authenticated visitors to view event information and register for events online - enable these permissions for the "anonymous" role.
     * **view event participants** : Enable this permission to allow anonymous users to access participant listing pages for events.
 <!-- markdownlint-enable MD046 -->
-## Create CiviCRM Contacts for Existing Drupal Users {:#contacts-users}
+
+## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your Drupal Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each Drupal user record. Conversely, only contacts who are authenticated users of your site will have corresponding Drupal user records.
 
@@ -121,7 +125,7 @@ When CiviCRM is installed on top of an existing Drupal site, a special CiviCRM A
 * Click **Administer** in the menu bar
 * Click **Users and Permissions** from the drop-down menu, then select **Synchronize Users to Contacts**
 
-## Review the Configuration Checklist {:#checklist}
+## Review the checklist {:#checklist}
 
 The **Configuration Checklist** provides a convenient way to work through the settings that need to be reviewed and configured for a new site. You can link to this checklist from the installation success page AND you can visit it at any time from **Administer** » **Administration Console** » **Configuration Checklist**.
 
@@ -129,7 +133,9 @@ The **Configuration Checklist** provides a convenient way to work through the se
 
 There should now be a **CiviCRM** link in your Drupal menu. Click that link and the CiviCRM Menu, Shortcuts, Search and New Individual Blocks should appear. You can now explore CiviCRM end-user features and begin configuring CiviCRM for your site/organization needs.
 
-## Using Encryption with MySQL
+## Addenda
+
+### TLS for MySQL
 
 If your MySQL database is hosted on a different machine than your web server, or if your host requires it, you can use TLS to encrypt the connection between the database and the web server.
 
@@ -200,7 +206,7 @@ See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the setti
     ),
     ```
 
-## Trouble-shooting Resources {:#troubleshooting}
+### Troubleshooting {:#troubleshooting}
 
 * Review the [Troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.
 * To check compatibility with other Drupal modules see: [Drupal modules incompatible with CiviCRM](https://docs.civicrm.org/sysadmin/en/latest/integration/drupal/incompatibilities/)

@@ -1,16 +1,18 @@
-## Scope of this guide and alternative installation methods
+!!! tldr "About this document"
 
-This guide covers standard installation of CiviCRM for production use. For installing a development environment, refer to the [section on Buildkit in the Developer Documentation](https://docs.civicrm.org/dev/en/latest/tools/buildkit/).
+    This guide covers standard installation of CiviCRM on an existing WordPress site. It assumes that you previously completed these tasks:
 
-## Before installing
+    1. [Install WordPress](https://wordpress.org/support/article/how-to-install-wordpress/), and...
+    1. [Review the CiviCRM requirements](../general/requirements.md)
 
-1. Ensure that your system meets the [requirements](../general/requirements.md).
-1. Install WordPress by referring to the [WordPress Installation Guide](https://wordpress.org/support/article/how-to-install-wordpress/) if needed.
+!!! tldr "Similar alternatives"
+
+    If you plan to develop patches for CiviCRM on WordPress, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
 !!! note "Path for WordPress"
     The rest of these instructions assume that you have WordPress installed in `/var/www/wordpress`. Adjust paths as needed.
 
-## Download and Un-zip CiviCRM Code
+## Get the code {:#download}
 
 All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are included in the compressed CiviCRM distribution files ('zips'). Follow these steps to download and install the codebase:
 
@@ -52,11 +54,11 @@ All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are inclu
         <!-- markdownlint-enable MD046 -->
 * You should now have a `/var/www/wordpress/wp-content/plugins/civicrm` directory containing `civicrm.php`, `README.txt` and another civicrm directory (which in turn contains bin, CRM, sql, templates, etc.).
 
-## Install localization files (only for non-English sites) {:#i18n}
+## Get the translations {:#i18n}
 
-If using CiviCRM in another language than English, see the [internationalisation and localisation](../general/i18n_l10n.md) page about how to install files for running CiviCRM in other languages.
+The basic CiviCRM release includes support for US English (`en_US`). To use another language or dialect, please [download and extract the translation files](../general/i18n_l10n.md).
 
-## Enable CiviCRM plugin and run installer
+## Run the installer
 
 The installer will verify that you've downloaded the correct version of CiviCRM, and will check your server environment to make sure it meets CiviCRM requirements. It will then create and populate a database for CiviCRM as well as create your CiviCRM settings file `civicrm.settings.php`.
 
@@ -97,15 +99,17 @@ The installer will verify that you've downloaded the correct version of CiviCRM,
         even after changing directory permission in Explorer, see [the permissions page](../general/permissions.md) for instructions on how to set permissions on Linux, MacOS and Windows.
     * Once you see the green "You're ready to install!" message - you can click **Check Requirements and Install CiviCRM**
 
-## Locate and Backup the CiviCRM settings file
+## Backup the settings file
 
-After installation, a configuration file will have been created by CiviCRM at: `<wordpress>/wp-content/uploads/civicrm/civicrm.settings.php`
+The installer created a configuration file at `<wordpress>/wp-content/uploads/civicrm/civicrm.settings.php`
 
 It is critical you make a copy of this file and save as a backup in a safe location. This file contains passwords and other critical information, take precautions to secure the copy from prying eyes.
 
 Should an upgrade fail, you will need this backup copy to restore your site.
 
-## Enabling Cleaner URLs for WordPress
+<!-- Is the above still true for new installations in Civi 4.7/5.x? Makes sense if 4.6, which bizarrely placed the config-file in the code-directory.But in 4.7+?? -->
+
+## Enable clean URLs
 
 * Starting in Version 5.13.x CiviCRM now can support "Clean URLs" for WordPress front-end (user-facing) pages.
 * By default CiviCRM URLs are in the format of `https://example.org/civicrm?page=CiviCRM&q=civicrm/contribute/transact&reset=1&id=1` for a Contribution Page. With clean URLs enabled:
@@ -159,7 +163,7 @@ if (!defined('CIVICRM_CLEANURL')) {
 
 * Now Cleaner URLs will be enabled.  Enabling Cleaner URLs does not change how shortcodes work in CiviCRM and existing "Old" style URLs will still work
 
-## Create CiviCRM Contacts for Existing WordPress Users
+## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your WordPress Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each WordPress user record. Conversely, only contacts who are authenticated users of your site will have corresponding WordPress user records.
 
@@ -171,7 +175,7 @@ When CiviCRM is installed on top of an existing WordPress site, a special CiviCR
 * Click **Administer** in the menu bar
 * Click **Users and Permissions** from the drop-down menu, then select **Synchronize Users to Contacts**.
 
-## Review the Configuration Checklist
+## Review the checklist {:#checklist}
 
 The **Configuration Checklist** provides a convenient way to work through the settings that need to be reviewed and configured for a new site. You can link to this checklist from the installation success page AND you can visit it at any time from **Administer** » **Administration Console** » **Configuration Checklist**.
 
@@ -179,7 +183,9 @@ The **Configuration Checklist** provides a convenient way to work through the se
 
 There should now be a **CiviCRM** link in your WordPress menu. Click that link and the CiviCRM Menu, Shortcuts, Search and New Individual Blocks should appear. You can now explore CiviCRM end-user features and begin configuring CiviCRM for your site/organization needs.
 
-## Using Encryption with MySQL
+## Addenda
+
+### TLS for MySQL
 
 If your MySQL database is hosted on a different machine than your web server, or if your host requires it, you can use TLS to encrypt the connection between the database and the web server.
 
@@ -187,6 +193,6 @@ See [TLS for MySQL](../general/mysql_tls.md) for introductory concepts and the s
 
 * `define('MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL);`
 
-## Troubleshooting Resources {:#troubleshooting}
+### Troubleshooting {:#troubleshooting}
 
 * Review the [troubleshooting](../general/troubleshooting.md) page for help with problems you may encounter during the installation.
