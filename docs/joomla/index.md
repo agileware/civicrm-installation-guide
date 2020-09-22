@@ -35,7 +35,7 @@ Note: when installing a new version over an old one, please first check [trouble
 
     Note that missing PHP Zip functionality *will* prevent CiviCRM from installing extensions via the GUI.
 
-## Create CiviCRM Contacts for Existing Joomla Users {:#contacts-users}
+## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your Joomla Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each Joomla user record. Conversely, only contacts who are authenticated users of your site will have corresponding Joomla user records.
 

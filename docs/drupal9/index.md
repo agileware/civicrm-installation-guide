@@ -177,7 +177,7 @@ Replace `cv` with the path to the cv phar on your system if applicable. The part
     * **view event participants** : Enable this permission to allow anonymous users to access participant listing pages for events.
 <!-- markdownlint-enable MD046 -->
 
-## Create CiviCRM Contacts for Existing Drupal Users {:#contacts-users}
+## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your Drupal Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each Drupal user record. Conversely, only contacts who are authenticated users of your site will have corresponding Drupal user records.
 

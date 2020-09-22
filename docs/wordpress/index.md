@@ -159,7 +159,7 @@ if (!defined('CIVICRM_CLEANURL')) {
 
 * Now Cleaner URLs will be enabled.  Enabling Cleaner URLs does not change how shortcodes work in CiviCRM and existing "Old" style URLs will still work
 
-## Create CiviCRM Contacts for Existing WordPress Users
+## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your WordPress Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each WordPress user record. Conversely, only contacts who are authenticated users of your site will have corresponding WordPress user records.
 

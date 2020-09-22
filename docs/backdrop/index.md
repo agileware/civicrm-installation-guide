@@ -107,7 +107,7 @@ The installer will verify that you've downloaded the correct version of CiviCRM,
     * **view event participants** : Enable this permission to allow anonymous users to access participant listing pages for events.
 <!-- markdownlint-enable MD046 -->
 
-## Create CiviCRM Contacts for Existing Backdrop Users {:#contacts-users}
+## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your Backdrop Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each Backdrop user record. Conversely, only contacts who are authenticated users of your site will have corresponding Backdrop user records.
 
