@@ -36,7 +36,8 @@ In the above example:
 | Database User Name | dbuser |
 | Database User Password | dbpassword |
 
-## Tell Backdrop where to find the CiviCRM Module {:#directory}
+<a name="directory"></a><!-- old anchor -->
+## Get the code {:#download}
 
 First, download CiviCRM and install the files like you would any other module:
 
@@ -49,9 +50,9 @@ The most up-to-date version of CiviCRM will always be available from the [CiviCR
 
 **Do NOT** proceed to "activate" the module - that will happen automatically when you run the installer.
 
-## Install localization files (only for sites in a language other than US English) {:#i18n}
+## Get the translations {:#i18n}
 
-If using CiviCRM in another language than English, see the [internationalisation and localisation](../general/i18n_l10n.md) page about how to install files for running CiviCRM in other languages.
+The basic CiviCRM release includes support for US English (`en_US`). To use another language or dialect, please [download and extract the translation files](../general/i18n_l10n.md).
 
 ## Run the Installer {:#installer}
 

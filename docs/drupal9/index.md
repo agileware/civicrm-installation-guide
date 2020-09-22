@@ -16,7 +16,8 @@ This guide covers standard installation of CiviCRM for production use. For insta
 !!! warning "Composer install required!"
     This guide will assume that you have installed Drupal 9 using composer. At this time manual installation of Drupal 8 using zip or tarball install methods is not supported.
 
-## Downloading CiviCRM on Drupal 9 with Composer {:#downloading}
+<a name="downloading"></a><!-- old anchor -->
+## Get the code {:#download}
 
 To download CiviCRM on a Drupal 9 site we'll need to ask [Composer](https://www.getcomposer.org) to `require` the CiviCRM libraries. We do this by requiring the `civicrm-core`, `civicrm-drupal-8`, `civicrm-packages` and `civicrm-asset-plugin` libraries.
 
@@ -65,7 +66,7 @@ Optionally you can also require the [`cv`](https://github.com/civicrm/cv) comman
 
 * `composer require civicrm/cv` - This will place the cv binary in `./vendor/bin/cv` relative to your `composer.json` file.
 
-## Install localization files (for sites needing languages other than US-English) {:#i18n}
+## Get the translations {:#i18n}
 
 !!! warning "I18n & L10n on Drupal 9"
     If installing with the GUI it is currently only possible to install CiviCRM in English (US) on Drupal 9. Adding the language files involves breaking with Composer best practices by writing the contents of the `civicrm-l10n` tarball into `vendor/civicrm/civicrm-core` or configuring the `civicrm.l10n` directory path after you install and placing the contents of the `civicrm-l10n` tarball into the configured directory.

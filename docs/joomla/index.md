@@ -10,7 +10,7 @@ This guide covers standard installation of CiviCRM for production use. For insta
 !!! note "Path for Joomla"
     The rest of these instructions assume that you have Joomla installed in `/var/www/JOOMLA_ROOT`. Adjust paths as needed.
 
-## Download and Un-tar CiviCRM Code {:#download}
+## Get the code {:#download}
 
 All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are included in the compressed CiviCRM distribution files ('tarballs'). Follow these steps to download and install the codebase:
 

@@ -10,7 +10,7 @@ This guide covers standard installation of CiviCRM for production use. For insta
 !!! note "Path for WordPress"
     The rest of these instructions assume that you have WordPress installed in `/var/www/wordpress`. Adjust paths as needed.
 
-## Download and Un-zip CiviCRM Code
+## Get the code {:#download}
 
 All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are included in the compressed CiviCRM distribution files ('zips'). Follow these steps to download and install the codebase:
 
@@ -52,9 +52,9 @@ All CiviCRM code and packages used by CiviCRM (such as PEAR libraries) are inclu
         <!-- markdownlint-enable MD046 -->
 * You should now have a `/var/www/wordpress/wp-content/plugins/civicrm` directory containing `civicrm.php`, `README.txt` and another civicrm directory (which in turn contains bin, CRM, sql, templates, etc.).
 
-## Install localization files (only for non-English sites) {:#i18n}
+## Get the translations {:#i18n}
 
-If using CiviCRM in another language than English, see the [internationalisation and localisation](../general/i18n_l10n.md) page about how to install files for running CiviCRM in other languages.
+The basic CiviCRM release includes support for US English (`en_US`). To use another language or dialect, please [download and extract the translation files](../general/i18n_l10n.md).
 
 ## Enable CiviCRM plugin and run installer
 
