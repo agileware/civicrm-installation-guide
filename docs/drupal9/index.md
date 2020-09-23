@@ -15,57 +15,130 @@
 
     If you plan to develop patches for CiviCRM on Drupal 9, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
-!!! warning "Composer install required!"
-    This guide will assume that you have installed Drupal 9 using composer. At this time manual installation of Drupal 8 using zip or tarball install methods is not supported.
-
 <a name="downloading"></a><!-- old anchor -->
 ## Get the code {:#download}
 
-To download CiviCRM on a Drupal 9 site we'll need to ask [Composer](https://www.getcomposer.org) to `require` the CiviCRM libraries. We do this by requiring the `civicrm-core`, `civicrm-drupal-8`, `civicrm-packages` and `civicrm-asset-plugin` libraries.
+Drupal 9 (D9) sites are typically administered with [Composer](https://www.getcomposer.org). Composer is a *dependency management* tool which can add, upgrade, and remove software *packages* for your site.
 
-<!-- markdownlint-disable MD046 -->
-!!! tip "Versions!"
-    It is **strongly** recommended that you provide a version when requiring these libraries, as such our example command below will include, as an example, the version `5.27.2`. Note that installing ESR versions onto CiviCRM has not been tested at this time and as such no instructions for doing so are provided.
+CiviCRM is published as a suite of related packages. Our goal is to use Composer to add CiviCRM's packages to the D9 site.
 
-    Note that that Drupal 9 installation has only been confirmed to work from 5.28.0 onwards.
+If you do not work regularly with D9+Composer, then you should take a refresher before installing CiviCRM.
 
-    Failure to provide a version will most likely result in you installing the `dev-master` version which is bleeding-edge code and may result in an unstable site/setup!
+??? example "Quick and dirty introduction to D9 with `composer`"
 
-!!! tip "Composer running out of memory?"
-    You may need to [increase composer's memory limit](https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors) in order to avoid out of memory errors.
+    Composer requires shell access to the D9 site. It defines a command `composer`.
 
-    Best practice is to use `composer require` locally or in dev/test and then deploy your `composer.lock` to staging and use `composer install` which requires less memory and implements the changes you've tested and committed to your repo!
-<!-- markdownlint-enable MD046 -->
+    Many D9 sites are initialized via `composer`, which means that `composer` is already available.  This
+    can be confirmed in the shell by running `composer --version`:
 
-### Expert mode - Just the command
+    ```
+    $ composer --version
+    Composer version 1.10.13 2020-09-09 11:46:34
+    ```
 
-To require the CiviCRM libraries on a Drupal 9 site you can use the following one-line command:
+    It is possible that your system does not have `composer` -- for example, if you used a tar-based installation of D9,
+    then you may never have needed `composer` before.
 
-??? note "Enabling Patching for composer libraries"
-    You should make sure that before running this line that you either modify the composer.json file to include the parameter `"enable-patching": true` in the extra section or run `composer config 'extra.enable-patching' true` as per the [composer-patches documentation](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies). This isn't necessary immediately but from CiviCRM 5.30 it will be required for CiviCRM to function correctly.
+    If `composer` is missing, then you must [download and install it](https://getcomposer.org/download/) first.
+    Additionally, you probably need to [set composer's memory limit](https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors)
+    high enough for D9.
 
-??? note CiviCRM composer compile plugin.
-    When you first install or upgrade to CiviCRM version 5.31 or later you will be asked about running composer compile tasks. We strongly recommend that you select all as the answer to this question to ensure CiviCRM is able to compile assets using composer correctly. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to `all` before performing the upgrade or install.
+    Once you have `composer`, you need to navigate to the composer-root. You can recognize it by the following:
 
-* `composer require civicrm/civicrm-asset-plugin:'~1.1' civicrm/civicrm-{core,packages,drupal-8}:'~5.28'`
+    * It has the files `composer.json` and `composer.lock`.
+    * It has a subfolder `vendor/`.
+    * It usually has a subfolder `web/` (the web-root); alternatively, it may *be* the web-root.
 
-### Guided mode - More context and information
+    <!-- For D9, do we still need the caveats about web-root? Are we sure everyone on D9 has web/? -->
 
-!!! tip "Location, Location... Location"
-    You should always run `composer` commands from the top-level folder above the web and vendor folders, where in the same place as your `composer.json` file.
+    A typical file-hierarchy might look like:
 
-??? note "Enabling Patching for composer libraries"
-    You should start by ensuring that patching is enabled for dependencies by altering composer.json and adding `"enable-patching": true` in the extra section or run `composer config 'extra.enable-patching' true` as per the [composer-patches documentation](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies). This isn't necessary immediately but from CiviCRM 5.30 it will be required for CiviCRM to function correctly.
+    ```
+    /var/www/d9.example.org/                Composer-root
+    /var/www/d9.example.org/composer.json   Composer-configuration
+    /var/www/d9.example.org/composer.lock   Composer-configuration
+    /var/www/d9.example.org/web/            Web-root (usually)
+    /var/www/d9.example.org/vendor/         Downloaded packages
+    ```
 
-You can also install CiviCRM by running these commands separately, this is what that looks like, along with a brief explanation of what each step is doing:
+    To work with `composer` and D9, you must open a shell navigate to the composer-root, e.g.
 
-??? note CiviCRM composer compile plugin.
-    When you first install or upgrade to CiviCRM version 5.31 or later you will be asked about running composer compile tasks. We strongly recommend that you select all as the answer to this question to ensure CiviCRM is able to compile assets using composer correctly. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to `all` before performing the upgrade or install.
+    ```
+    cd /var/www/d9.example.org
+    ```
 
-1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.1'`
-1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.28'`
-1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.28'`
-1. Require the CiviCRM Drupal 9 integration code: `composer require civicrm/civicrm-drupal8:'~5.28'`
+If `composer` is properly installed, then these example commands will add CiviCRM to D9:
+
+```
+cd /var/www/d9.example.org
+composer config extra.enable-patching true
+composer require civicrm/civicrm-asset-plugin:'~1.0'
+composer require civicrm/civicrm-{core,packages,drupal-8}:'~5.29'
+```
+
+You should adjust the example path (`/var/www/d9.example.org`) and the example version (`~5.29`) as needed.
+
+If you'd like more details to understand these commands or common errors, then please drill-down below.
+
+??? info "More detail: Enable patching"
+
+    A handful of packages used by CiviCRM require extra patch-files.
+
+    This is possible with the popular [cweagans/composer-patches](https://github.com/cweagans/composer-patches)
+    plugin. However, you must [opt-in to enable it](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies).
+
+??? info "More detail: Required packages"
+
+    | Package | Description |
+    | -- | -- |
+    | `civicrm/civicrm-asset-plugin` | A tool which automatically copies JS+CSS assets from CiviCRM to D9's `web/` folder |
+    | `civicrm/civicrm-core` | The primary CiviCRM codebase |
+    | `civicrm/civicrm-drupal-8` | The integration module for CiviCRM and D8/D9 |
+    | `civicrm/civicrm-packages` | A collection of third-party/legacy packages used by CiviCRM |
+
+??? info "More detail: Version constraints"
+
+    The primary CiviCRM packages (`civicrm-core`, `civicrm-drupal-8`, `civicrm-packages`) have *synchronized*
+    versions. If one package is installed with v5.30.1, then the others should also be v5.30.1.
+
+    The following expression references the three packages and applies the same version-constraint to each:
+
+    ```
+    civicrm/civicrm-{core,packages,drupal-8}:'~5.29'
+    ```
+
+    The expression `~5.29` is a version-constraint.  It means that composer will install *approximately* v`5.29`.  It may
+    install a newer patch-release (e.g.  `5.29.1`) or a newer minor-release (e.g.  `5.31.0`).  However, it will avoid
+    major-releases (e.g. `6.0.0`).
+
+    Many `composer` tutorials rely on `composer` to automatically choose package-versions.
+    This is not recommended for CiviCRM/D9. Instead, package versioning should be explicit to ensure that:
+
+    1. CiviCRM versions remain synchronized.
+    2. CiviCRM stable releases are preferred over developmental releases.
+
+       <!-- honestly, that second thing is weird to me.  if people get dev releases unintentionally, then they've
+        probably misconfigured/misunderstood their `composer.json`.  but given how consultancies blend upstream/public
+        pkgs and inhouse/private pkgs, and given how inhouse pkgs tend to have lax versioning, i can see how there'd
+        be pressure on D9 site-builders to make the configuration promiscuous -->
+
+??? question "How to resolve conflicts in `pear/exception`?"
+
+    <!-- Is this still needed in D9? I feel like they fixed in later D8.x templates. -->
+
+    In some configurations, you may see an error message about the package `pear/exception`. This is
+    because some packages use `pear/exception` -- but they have been overly specific about the required
+    version. (To wit: they require version `1.0.0` when version `1.0.1` will also work.)
+
+    To resolve this error, you can install v1.0.1 and *pretend* that it is v1.0.0:
+
+    ```
+    composer require pear/pear_exception:'1.0.1 as 1.0.0'
+    ```
+
+    After fixing this, you may continue the regular installation commands.
+
+<!--
 
 Optionally you can also require the [`cv`](https://github.com/civicrm/cv) command-line helper/interface for CiviCRM with:
 
@@ -73,6 +146,8 @@ Optionally you can also require the [`cv`](https://github.com/civicrm/cv) comman
     **Composer installs of cv are currently broken** for now use the [manual install steps](https://github.com/civicrm/cv#download).
 
 * `composer require civicrm/cv` - This will place the cv binary in `./vendor/bin/cv` relative to your `composer.json` file.
+
+-->
 
 ## Get the translations {:#i18n}
 
