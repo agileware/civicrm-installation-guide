@@ -12,14 +12,71 @@
 <a name="directory"></a><!-- old anchor -->
 ## Get the code {:#download}
 
-First, download CiviCRM and install the files like you would any other module:
+The [CiviCRM download page](https://civicrm.org/download) provides a pre-built archive for use with Drupal 7.  A
+typical archive file is ~20mb and looks like `civicrm-X.Y.Z-drupal.tar.gz`. It contains a folder named `civicrm/`.
 
-* As administrator in Drupal, go to Modules, click on **Install New Module** , and it will ask you to fill in the URL of the module. It will then fetch it and install it for you. You will need to enable the **Update Manager** module in the Drupal modules page to see the **Install New Module** link.
-* Alternatively, you can upload and extract the file in `<DRUPAL ROOT>/sites/all/modules`
+In Drupal 7, there is a folder for storing add-on modules: `DRUPAL_ROOT/sites/all/modules`.
 
-The result will be that the CiviCRM directory will be at `<DRUPAL ROOT>/sites/all/modules/civicrm`
+Our goal is to download the archive and extract into this folder. Here are a few example ways to download and extract:
 
-The most up-to-date version of CiviCRM is always available from the [CiviCRM website](https://civicrm.org/download)
+??? example "Download via web-browser"
+
+    This method does not require shell access on the server. You may adapt based your server's arrangement.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), click the link for CiviCRM / Drupal 7. Save the file locally.
+    * Extract the archive locally. For example, in a Linux workstation, one might say:
+      ```bash
+      cd ~/Downloads
+      tar xvzf civicrm-X.Y.Z-drupal.tar.gz
+      ```
+    * Observe the new folder `civicrm/`.
+    * Using your favor file-transfer system (SSH/SFTP, `rsync`, `git`, `mv`, etc), transfer the `civicrm/` folder
+      to `DRUPAL_ROOT/sites/all/modules`.
+
+??? example "Download via curl + tar"
+
+    This method require shell access to the Drupal server.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), note the current version.
+    * In the shell, navigate to the Drupal module folder (*adjust as appropriate*):
+      ```bash
+      cd DRUPAL_ROOT/sites/all/modules
+      ```
+    * In the shell, run the `curl` and `tar` commands. Adjust the version `X.Y.Z` to the appropriate value.
+      ```bash
+      curl -L "https://download.civicrm.org/civicrm-X.Y.Z-drupal.tar.gz" | tar xvz
+      ```
+
+??? example "Download via Drupal web UI"
+
+    This is the easiest way for a new administrator. However, it may not work in all deployments or
+    all versions. For
+    example, if the Drupal server has a locked-down configuration, then it may encounter permission errors
+    or timeouts. The only way to find out is to try.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), right-click the link for CiviCRM / Drupal 7. Copy the URL.
+    * Login to your Drupal site with *administrator* permissions.
+    * Navigate to **Modules >> Install new module**.
+    * Paste the URL
+    * Click "Install"
+
+    ??? warning "This may not work with CiviCRM 5.13-5.30"
+
+        In CiviCRM versions 5.13 - 5.30, the prebuilt tarball included a symlink which is not accepted by
+        the Drupal 7 installer. This should work again in 5.31.
+
+        <!-- TODO: After 5.31 has been out for a while, we can move this option higher up and remove/downgrade the notice. -->
+
+    ??? warning "The "Upload"/"Browse" option is unlikely to work."
+
+        The **Install new module** page provides another option for uploading the archive from your local computer.
+        In a default PHP configuration, the upload limits are too conservative to accept the CiviCRM archive.
+
+In all cases, the final outcome should be the creation of a new folder
+
+```
+DRUPAL_ROOT/sites/all/modules/civicrm
+```
 
 ## Get the translations {:#i18n}
 

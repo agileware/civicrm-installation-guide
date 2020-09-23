@@ -12,14 +12,72 @@
 <a name="directory"></a><!-- old anchor -->
 ## Get the code {:#download}
 
-First, download CiviCRM and install the files like you would any other module:
+The [CiviCRM download page](https://civicrm.org/download) provides a pre-built archive for use with Backdrop. A
+typical archive file is ~20mb and looks like `civicrm-X.Y.Z-backdrop.tar.gz`. It contains a folder named `civicrm/`.
 
-* As administrator in Backdrop, go to Modules, click on **Install New Module**.  Click **Manual Installation**, then **Install from a URL**.  Fill in the URL of the module (see below). You will need to enable the **Project Installer** module in the backdrop modules page to see the **Install New Module** link.
-* Alternatively, you can upload and extract the file in `<BACKDROP ROOT>/modules`
+In Backdrop, there is a folder for storing add-on modules: `BACKDROP_ROOT/modules`.
 
-The result will be that the CiviCRM directory will be at `<BACKDROP ROOT>/modules/civicrm`
+Our goal is to download the archive and extract into this folder. Here are a few example ways to download and extract:
 
-The most up-to-date version of CiviCRM will always be available from the [CiviCRM website](https://civicrm.org/download).
+??? example "Download via web-browser"
+
+    This method does not require shell access on the server. You may adapt based your server's arrangement.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), click the link for CiviCRM / Backdrop. Save the file locally.
+    * Extract the archive locally. For example, in a Linux workstation, one might say:
+      ```bash
+      cd ~/Downloads
+      tar xvzf civicrm-X.Y.Z-backdrop.tar.gz
+      ```
+    * Observe the new folder `civicrm/`.
+    * Using your favor file-transfer system (SSH/SFTP, `rsync`, `git`, `mv`, etc), transfer the `civicrm/` folder
+      to `BACKDROP_ROOT/modules`.
+
+??? example "Download via curl + tar"
+
+    This method require shell access to the Backdrop server.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), note the current version.
+    * In the shell, navigate to the Backdrop module folder (*adjust as appropriate*):
+      ```bash
+      cd BACKDROP_ROOT/modules
+      ```
+    * In the shell, run the `curl` and `tar` commands. Adjust the version `X.Y.Z` to the appropriate value.
+      ```bash
+      curl -L "https://download.civicrm.org/civicrm-X.Y.Z-backdrop.tar.gz" | tar xvz
+      ```
+
+??? example "Download via Backdrop web UI"
+
+    This is the easiest way for a new administrator. However, it may not work in all deployments. For
+    example, if the Backdrop server has a locked-down configuration, then it may encounter permission errors
+    or timeouts. The only way to find out is to try.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), right-click the link for CiviCRM / Backdrop. Copy the URL.
+    * Login to your Backdrop site with *administrator* permissions.
+    * Navigate to **Functionality >> Install new modules**.
+    * In the right hand bar, choose **Manual installation >> Install from a URL**.
+    * Paste the URL
+    * Click "Install"
+
+    ??? warning "This may not work with CiviCRM 5.13-5.30"
+
+        In CiviCRM versions 5.13 - 5.30, the prebuilt tarball included a symlink which is not accepted by
+        the Backdrop installer. This should work again in 5.31.
+
+        <!-- TODO: After 5.31 has been out for a while, we can move this option higher up and remove/downgrade the notice. -->
+
+    ??? warning "The "Upload"/"Browse" option is unlikely to work."
+
+        The **Install new module** page provides another option for uploading the archive from your local computer.
+        In a default PHP configuration, the upload limits are too conservative to accept the CiviCRM archive.
+
+In all cases, the final outcome should be the creation of a new folder
+
+```
+BACKDROP_ROOT/modules/civicrm
+```
+
 
 ## Get the translations {:#i18n}
 
