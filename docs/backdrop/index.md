@@ -1,11 +1,11 @@
-!!! tldr "About this document"
+???+ tldr "About this document"
 
     This guide covers standard installation of CiviCRM on an existing Backdrop site. It assumes that you previously completed these tasks:
 
     1. [Install Backdrop](https://backdropcms.org/installation), and...
     1. [Review the CiviCRM requirements](../general/requirements.md)
 
-!!! tldr "Similar alternatives"
+??? tldr "Alternative: Civibuild for developers"
 
     If you plan to develop patches for CiviCRM on WordPress, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 

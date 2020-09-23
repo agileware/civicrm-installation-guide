@@ -1,11 +1,11 @@
-!!! tldr "About this document"
+???+ tldr "About this document"
 
     This guide covers standard installation of CiviCRM on an existing Drupal 8 site. It assumes that you previously completed these tasks:
 
     1. [Install Drupal 8](https://www.drupal.org/docs/8/install), and...
     1. [Review the CiviCRM requirements](../general/requirements.md)
 
-!!! tldr "Similar alternatives"
+??? tldr "Alternative: Civibuild for developers"
 
     If you plan to develop patches for CiviCRM on Drupal 8, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
