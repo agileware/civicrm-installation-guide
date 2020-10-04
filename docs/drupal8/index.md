@@ -34,7 +34,7 @@ To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.
 To require the CiviCRM libraries on a Drupal 8 site you can use the following one-line command:
 
 ??? note CiviCRM composer compile plugin.
-    When you first install or upgrade CiviCRM using a version 5.31 or later you will be presented with a question about running all the composer compile tasks. It is strongly recommened you select all on that to make your life simpler. You can also run the following command to set the necessary composer configuration variable to be all before performing the upgrade.
+    When you first install or upgrade CiviCRM using a version 5.31 or later you will be presented with a question about running all the composer compile tasks. It is strongly recommened you select all on that to make your life simpler. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to be all before performing the upgrade.
 
 ??? note "Enabling Patching for composer libraries"
     You should make sure that before running this line that you either modify the composer.json file to include the parameter `"enable-patching": true` in the extra section or run `composer config 'extra.enable-patching' true` as per the [composer-patches documentation](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies). This isn't necessary immediately but from CiviCRM 5.30 it will be required for CiviCRM to function correctly.
@@ -49,9 +49,12 @@ To require the CiviCRM libraries on a Drupal 8 site you can use the following on
 ??? note "Enabling Patching for composer libraries"
     You should start by ensuring that patching is enabled for dependencies by altering composer.json and adding `"enable-patching": true` in the extra section or run `composer config 'extra.enable-patching' true` as per the [composer-patches documentation](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies). This isn't necessary immediately but from CiviCRM 5.30 it will be required for CiviCRM to function correctly.
 
+??? note CiviCRM composer compile plugin.
+    When you first install or upgrade CiviCRM using a version 5.31 or later you will be presented with a question about running all the composer compile tasks. It is strongly recommened you select all on that to make your life simpler. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to be all before performing the upgrade.
+
 You can also install CiviCRM by running these commands separately, this is what that looks like, along with a brief explanation of what each step is doing:
 
-1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.0.0'`
+1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.1'`
 1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.29'`
 1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.29'`
 1. Require the CiviCRM Drupal 8 integration code: `composer require civicrm/civicrm-drupal-8:'~5.29'`
