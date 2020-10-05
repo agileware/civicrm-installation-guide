@@ -45,7 +45,7 @@ To require the CiviCRM libraries on a Drupal 9 site you can use the following on
     You should make sure that before running this line that you either modify the composer.json file to include the parameter `"enable-patching": true` in the extra section or run `composer config 'extra.enable-patching' true` as per the [composer-patches documentation](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies). This isn't necessary immediately but from CiviCRM 5.30 it will be required for CiviCRM to function correctly.
 
 ??? note CiviCRM composer compile plugin.
-    When you first install or upgrade CiviCRM using a version 5.31 or later you will be presented with a question about running all the composer compile tasks. It is strongly recommened you select all on that to make your life simpler. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to be all before performing the upgrade.
+    When you first install or upgrade to CiviCRM version 5.31 or later you will be asked about running composer compile tasks. We strongly recommend that you select all as the answer to this question to ensure CiviCRM is able to compile assets using composer correctly. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to `all` before performing the upgrade or install.
 
 * `composer require civicrm/civicrm-asset-plugin:'~1.1' civicrm/civicrm-{core,packages,drupal-8}:'~5.28'`
 
@@ -60,7 +60,7 @@ To require the CiviCRM libraries on a Drupal 9 site you can use the following on
 You can also install CiviCRM by running these commands separately, this is what that looks like, along with a brief explanation of what each step is doing:
 
 ??? note CiviCRM composer compile plugin.
-    When you first install or upgrade CiviCRM using a version 5.31 or later you will be presented with a question about running all the composer compile tasks. It is strongly recommened you select all on that to make your life simpler. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to be all before performing the upgrade.
+    When you first install or upgrade to CiviCRM version 5.31 or later you will be asked about running composer compile tasks. We strongly recommend that you select all as the answer to this question to ensure CiviCRM is able to compile assets using composer correctly. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to `all` before performing the upgrade or install.
 
 1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.1'`
 1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.28'`
