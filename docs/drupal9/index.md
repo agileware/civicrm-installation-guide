@@ -89,7 +89,9 @@ If you'd like more details to understand these commands or common errors, then p
 
 ??? info "More detail: Compilation tasks"
 
-    When you first install or upgrade to CiviCRM version 5.31 or later you will be asked about running composer compile tasks. We strongly recommend that you select all as the answer to this question to ensure CiviCRM is able to compile assets using composer correctly. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to `all` before performing the upgrade or install.
+    When you first install or upgrade to CiviCRM 5.31+, `composer` will prompt for permission to run CiviCRM compilation tasks. We recommend that you select `[a]lways`.
+
+    If you wish to suppress the prompt, see [Composer Compile Plugin: Managing the root package (for site-builders)](https://github.com/civicrm/composer-compile-plugin/blob/master/doc/site-build.md).
 
 ??? info "More detail: Required packages"
 
