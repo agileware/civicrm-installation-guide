@@ -61,7 +61,7 @@ If you do not work regularly with D9+Composer, then you should take a refresher 
     /var/www/d9.example.org/vendor/         Downloaded packages
     ```
 
-    To work with `composer` and D9, you must open a shell navigate to the composer-root, e.g.
+    To work with `composer` and D9, you must open a shell and navigate to the composer-root, e.g.
 
     ```
     cd /var/www/d9.example.org
