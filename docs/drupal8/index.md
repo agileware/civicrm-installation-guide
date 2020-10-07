@@ -64,7 +64,7 @@ If `composer` is properly installed, then these example commands will add CiviCR
 ```
 cd /var/www/d8.example.org
 composer config extra.enable-patching true
-composer require civicrm/civicrm-asset-plugin:'~1.0'
+composer require civicrm/civicrm-asset-plugin:'~1.1'
 composer require civicrm/civicrm-{core,packages,drupal-8}:'~5.29'
 ```
 
@@ -78,6 +78,10 @@ If you'd like more details to understand these commands or common errors, then p
 
     This is possible with the popular [cweagans/composer-patches](https://github.com/cweagans/composer-patches)
     plugin. However, you must [opt-in to enable it](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies).
+
+??? info "More detail: Compilation tasks"
+
+    When you first install or upgrade to CiviCRM version 5.31 or later you will be asked about running composer compile tasks. We strongly recommend that you select all as the answer to this question to ensure CiviCRM is able to compile assets using composer correctly. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to `all` before performing the upgrade or install.
 
 ??? info "More detail: Required packages"
 
