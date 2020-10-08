@@ -1,56 +1,83 @@
-!!! tldr "About this document"
+???+ tldr "About this document"
 
     This guide covers standard installation of CiviCRM on an existing Backdrop site. It assumes that you previously completed these tasks:
 
     1. [Install Backdrop](https://backdropcms.org/installation), and...
     1. [Review the CiviCRM requirements](../general/requirements.md)
 
-!!! tldr "Similar alternatives"
+??? tldr "Alternative: Civibuild for developers"
 
     If you plan to develop patches for CiviCRM on WordPress, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
-
-## Identify the database {:#db-settings}
-
-You will need to know the database settings for your Backdrop installation prior to running the CiviCRM installer. You can look up these values in your Backdrop `settings.php` file (located in your Backdrop root) be looking for the following code:
-
-``` php
-$db_url = 'mysql://dbuser:dbpassword@localhost/backdrop';
-```
-
-or
-
-``` php
-$databases['default']['default'] = array(
-  'driver' => 'mysql',
-  'database' => 'database_name',
-  'username' => 'dbuser',
-  'password' => 'dbpassword',
-  'host' => 'localhost',
-);
-```
-
-In the above example:
-
-| Setting | Value |
-| ------- | ----- |
-| Database Server | localhost |
-| Backdrop Database Name | backdrop |
-| Database User Name | dbuser |
-| Database User Password | dbpassword |
 
 <a name="directory"></a><!-- old anchor -->
 ## Get the code {:#download}
 
-First, download CiviCRM and install the files like you would any other module:
+The [CiviCRM download page](https://civicrm.org/download) provides a pre-built archive for use with Backdrop. A
+typical archive file is ~20mb and looks like `civicrm-X.Y.Z-backdrop.tar.gz`. It contains a folder named `civicrm/`.
 
-* As administrator in Backdrop, go to Modules, click on **Install New Module**.  Click **Manual Installation**, then **Install from a URL**.  Fill in the URL of the module (see below). You will need to enable the **Project Installer** module in the backdrop modules page to see the **Install New Module** link.
-* Alternatively, you can upload and extract the file in `<BACKDROP ROOT>/modules`
+In Backdrop, there is a folder for storing add-on modules: `BACKDROP_ROOT/modules`.
 
-The result will be that the CiviCRM directory will be at `<BACKDROP ROOT>/modules/civicrm`
+Our goal is to download the archive and extract into this folder. Here are a few example ways to download and extract:
 
-The most up-to-date version of CiviCRM will always be available from the [CiviCRM website](https://civicrm.org/download).
+??? example "Download via web-browser"
 
-**Do NOT** proceed to "activate" the module - that will happen automatically when you run the installer.
+    This method does not require shell access on the server. You may adapt based your server's arrangement.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), click the link for CiviCRM / Backdrop. Save the file locally.
+    * Extract the archive locally. For example, in a Linux workstation, one might say:
+      ```bash
+      cd ~/Downloads
+      tar xvzf civicrm-X.Y.Z-backdrop.tar.gz
+      ```
+    * Observe the new folder `civicrm/`.
+    * Using your favor file-transfer system (SSH/SFTP, `rsync`, `git`, `mv`, etc), transfer the `civicrm/` folder
+      to `BACKDROP_ROOT/modules`.
+
+??? example "Download via curl + tar"
+
+    This method require shell access to the Backdrop server.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), note the current version.
+    * In the shell, navigate to the Backdrop module folder (*adjust as appropriate*):
+      ```bash
+      cd BACKDROP_ROOT/modules
+      ```
+    * In the shell, run the `curl` and `tar` commands. Adjust the version `X.Y.Z` to the appropriate value.
+      ```bash
+      curl -L "https://download.civicrm.org/civicrm-X.Y.Z-backdrop.tar.gz" | tar xvz
+      ```
+
+??? example "Download via Backdrop web UI"
+
+    This is the easiest way for a new administrator. However, it may not work in all deployments. For
+    example, if the Backdrop server has a locked-down configuration, then it may encounter permission errors
+    or timeouts. The only way to find out is to try.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), right-click the link for CiviCRM / Backdrop. Copy the URL.
+    * Login to your Backdrop site with *administrator* permissions.
+    * Navigate to **Functionality >> Install new modules**.
+    * In the right hand bar, choose **Manual installation >> Install from a URL**.
+    * Paste the URL
+    * Click "Install"
+
+    ??? warning "This may not work with CiviCRM 5.13-5.30"
+
+        In CiviCRM versions 5.13 - 5.30, the prebuilt tarball included a symlink which is not accepted by
+        the Backdrop installer. This should work again in 5.31.
+
+        <!-- TODO: After 5.31 has been out for a while, we can move this option higher up and remove/downgrade the notice. -->
+
+    ??? warning "The "Upload"/"Browse" option is unlikely to work."
+
+        The **Install new module** page provides another option for uploading the archive from your local computer.
+        In a default PHP configuration, the upload limits are too conservative to accept the CiviCRM archive.
+
+In all cases, the final outcome should be the creation of a new folder
+
+```
+BACKDROP_ROOT/modules/civicrm
+```
+
 
 ## Get the translations {:#i18n}
 
@@ -58,34 +85,30 @@ The basic CiviCRM release includes support for US English (`en_US`). To use anot
 
 ## Run the installer {:#installer}
 
+The installer verifies requirements, prepares the database, and initializes the configuration file. You may run the installer through the web interface (*which is simpler*) or the command-line interface (*which has more options*).
+
+??? example "Run installer via Backdrop web UI"
+
+    1. Enable the "CiviCRM" module
+        * Login to your Backdrop site with *administrator* permissions.
+        * Navigate to the "Functionality" page (`admin/modules`).
+        * Find "CiviCRM" and enable it. At the bottom, click "Save Configuration".
+    2. After enabling, the status message will display a link to "configure CiviCRM". Click it.
+
+        ??? question "What if I didn't notice the link?"
+            Use the URL bar. Navigate to the `civicrm` page (e.g. `https://example.com/civicrm`).
+
+    3. The CiviCRM installer will open.
+        * *If there are unmet requirements*, the installer will list them. Consult the [Requirements](../general/requirements.md) documentation for additional advice.
+        * *If all the requirements are met*, proceed through the brief questionnaire.
+        * *If you have [a separate MySQL database for CiviCRM](../general/requirements.md#mysql-connection)*, then locate "Environment: CiviCRM Database". Click the edit icon and enter the [database URL](../general/requirements.md#mysql-connection).
+        * Finally, click "Install CiviCRM".
+
+??? example "Run installer via command-line"
+
+    CiviCRM has a command-line administration tool, `cv`, which can perform installation. For details, see [command-line installer](../general/cli-cv.md).
+
 The installer will verify that you've downloaded the correct version of CiviCRM, and will check your server environment to make sure it meets CiviCRM requirements. It will then create and populate a database for CiviCRM as well as create your CiviCRM settings file (civicrm.settings.php).
-
-* Login to your Backdrop site with Administrator level permissions.
-* Point your web browser to the following URL:
-
-    `https://example.org/modules/civicrm/install/index.php?civicrm_install_type=backdrop`
-
-* You should see the **CiviCRM Installer** screen.
-    * Initially, you will see a red bar with the message "These database details don't appear to be correct." This is expected as you haven't entered your database settings yet.
-    * If you see other errors, check the **Requirements** details at the bottom of the page for more information. You will need to correct any issues before continuing.
-* Fill in the CiviCRM Database Settings.
-
-    !!! tip "Where Should I Store CiviCRM Data?"
-         CiviCRM may be configured to use your existing Backdrop database, or a separate (new) database. Using a separate database is generally preferred - as it makes backups and upgrades easier. The installer will create a new database for CiviCRM automatically if you enter a database name that doesn't already exist on your database server AND the database user you enter has permission to create databases. In case the installer does not automatically create a new database, simply create a new one following the same process as creating a new database for Backdrop. Note that if you plan to use the Backdrop Views module to display CiviCRM data within your Backdrop pages, and if you are going to use separate databases for Backdrop and CiviCRM, you need to ensure that your Backdrop database user has `SELECT` permissions for your CiviCRM database.
-
-* Fill in the Backdrop Database Settings for your existing Backdrop database (as noted [above](#db-settings)).
-
-    !!! check "Loading Sample Data"
-        The Installer includes an option to load a set of sample contact, group, and relationship data by default. Sample data can provide a useful head-start in learning to use CiviCRM. However, if you do NOT want the sample data to be loaded, just uncheck **Load sample data** under **Other Settings**.
-
-* Select the appropriate language for the base installation. You will be able to add other languages after the installation for multi-lingual sites.
-* Click the **Check Requirements and Install CiviCRM** button.
-    * The installer will configure your databases, create the settings file and redirect you to your Backdrop Home page.
-    * If you still see a red bar with the message "These database details don't appear to be correct." - check the Database Details section below your settings for specific errors and problems. Once you correct these problems, click "Recheck requirements" to verify your settings before continuing.
-    * If you are on a Windows machine and get the message:
-      > "The user account used by your web-server needs to be granted write access to the following directory in order to configure the CiviCRM settings file: `C:<BACKDROP ROOT>/`"  
-      even after changing directory permission in Explorer, see [the permissions page](../general/permissions.md) for instructions on how to set permissions on Linux, MacOS and Windows.
-    * Once you see the green "You're ready to install!" message - you can click **Check Requirements and Install CiviCRM**
 
 ## Review the permissions {:#permissions}
 

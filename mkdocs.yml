@@ -36,6 +36,7 @@ nav:
       - Permissions: general/permissions.md
       - Internationalisation: general/i18n_l10n.md
       - TLS for MySQL: general/mysql_tls.md
+      - CLI Installer: general/cli-cv.md
       - Troubleshooting: general/troubleshooting.md
   - Planning:
       - Identifying your needs: planning/index.md

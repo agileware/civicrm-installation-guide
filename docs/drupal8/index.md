@@ -1,66 +1,140 @@
-!!! tldr "About this document"
+???+ tldr "About this document"
 
     This guide covers standard installation of CiviCRM on an existing Drupal 8 site. It assumes that you previously completed these tasks:
 
     1. [Install Drupal 8](https://www.drupal.org/docs/8/install), and...
     1. [Review the CiviCRM requirements](../general/requirements.md)
 
-!!! tldr "Similar alternatives"
+??? tldr "Alternative: Civibuild for developers"
 
     If you plan to develop patches for CiviCRM on Drupal 8, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
-
-!!! warning "Composer install required!"
-    This guide will assume that you have installed Drupal 8 using composer. At this time manual installation of Drupal 8 using zip or tarball install methods is not supported.
 
 <a name="downloading"></a><!-- old anchor -->
 ## Get the code {:#download}
 
-To download CiviCRM on a Drupal 8 site we'll need to ask [Composer](https://www.getcomposer.org) to `require` the CiviCRM libraries. We do this by requiring the `civicrm-core`, `civicrm-drupal-8`, `civicrm-packages` and `civicrm-asset-plugin` libraries.
+Drupal 8 (D8) sites are typically administered with [Composer](https://www.getcomposer.org). Composer is a *dependency management* tool which can add, upgrade, and remove software *packages* for your site.
 
-<!-- markdownlint-disable MD046 -->
-!!! tip "Versions!"
-    It is **strongly** recommended that you provide a version when requiring these libraries, as such our example command below will include, as an example, the version `5.27.2`. Note that installing ESR versions onto CiviCRM has not been tested at this time and as such no instructions for doing so are provided.
+CiviCRM is published as a suite of related packages. Our goal is to use Composer to add CiviCRM's packages to the D8 site.
 
-    Failure to provide a version will most likely result in you installing the `dev-master` version which is bleeding-edge code and may result in an unstable site/setup!
+If you do not work regularly with D8+Composer, then you should take a refresher before installing CiviCRM.
 
-!!! tip "Composer running out of memory?"
-    You may need to [increase composer's memory limit](https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors) in order to avoid out of memory errors.
+??? example "Quick and dirty introduction to D8 with `composer`"
 
-    Best practice is to use `composer require` locally or in dev/test and then deploy your `composer.lock` to staging and use `composer install` which requires less memory and implements the changes you've tested and committed to your repo!
-<!-- markdownlint-enable MD046 -->
+    Composer requires shell access to the D8 site. It defines a command `composer`.
 
-### Expert mode - Just the command
+    Many D8 sites are initialized via `composer`, which means that `composer` is already available.  This
+    can be confirmed in the shell by running `composer --version`:
 
-To require the CiviCRM libraries on a Drupal 8 site you can use the following one-line command:
+    ```
+    $ composer --version
+    Composer version 1.10.13 2020-09-09 11:46:34
+    ```
 
-??? note CiviCRM composer compile plugin.
-    When you first install or upgrade to CiviCRM version 5.31 or later you will be asked about running composer compile tasks. We strongly recommend that you select all as the answer to this question to ensure CiviCRM is able to compile assets using composer correctly. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to `all` before performing the upgrade or install.
+    It is possible that your system does not have `composer` -- for example, if you used a tar-based installation of D8,
+    then you may never have needed `composer` before.
 
-??? note "Enabling Patching for composer libraries"
-    You should make sure that before running this line that you either modify the composer.json file to include the parameter `"enable-patching": true` in the extra section or run `composer config 'extra.enable-patching' true` as per the [composer-patches documentation](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies). This isn't necessary immediately but from CiviCRM 5.30 it will be required for CiviCRM to function correctly.
+    If `composer` is missing, then you must [download and install it](https://getcomposer.org/download/) first.
+    Additionally, you probably need to [set composer's memory limit](https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors)
+    high enough for D8.
 
-* `composer require civicrm/civicrm-asset-plugin:'~1.1' civicrm/civicrm-{core,packages,drupal-8}:'~5.29'`
+    Once you have `composer`, you need to navigate to the composer-root. You can recognize it by the following:
 
-### Guided mode - More context and information
+    * It has the files `composer.json` and `composer.lock`.
+    * It has a subfolder `vendor/`.
+    * It usually has a subfolder `web/` (the web-root); alternatively, it may *be* the web-root.
 
-!!! tip "Location, Location... Location"
-    You should always run `composer` commands from the top-level folder above the web and vendor folders, where in the same place as your `composer.json` file.
+    A typical file-hierarchy might look like:
 
-??? note "Enabling Patching for composer libraries"
-    You should start by ensuring that patching is enabled for dependencies by altering composer.json and adding `"enable-patching": true` in the extra section or run `composer config 'extra.enable-patching' true` as per the [composer-patches documentation](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies). This isn't necessary immediately but from CiviCRM 5.30 it will be required for CiviCRM to function correctly.
+    ```
+    /var/www/d8.example.org/                Composer-root
+    /var/www/d8.example.org/composer.json   Composer-configuration
+    /var/www/d8.example.org/composer.lock   Composer-configuration
+    /var/www/d8.example.org/web/            Web-root (usually)
+    /var/www/d8.example.org/vendor/         Downloaded packages
+    ```
 
-??? note CiviCRM composer compile plugin.
-    When you first install or upgrade to CiviCRM version 5.31 or later you will be asked about running composer compile tasks. We strongly recommend that you select all as the answer to this question to ensure CiviCRM is able to compile assets using composer correctly. You can also run the following command `composer config extra.compile-mode all` to set the necessary composer configuration variable to `all` before performing the upgrade or install.
+    To work with `composer` and D8, you must open a shell and navigate to the composer-root, e.g.
 
-You can also install CiviCRM by running these commands separately, this is what that looks like, along with a brief explanation of what each step is doing:
+    ```
+    cd /var/www/d8.example.org
+    ```
 
-1. Require the CiviCRM composer asset plugin which helps build a predictable structure for your CiviCRM codebase: `composer require civicrm/civicrm-asset-plugin:'~1.1'`
-1. Require the CiviCRM core code: `composer require civicrm/civicrm-core:'~5.29'`
-1. Require the CiviCRM third-party packages library: `composer require civicrm/civicrm-packages:'~5.29'`
-1. Require the CiviCRM Drupal 8 integration code: `composer require civicrm/civicrm-drupal-8:'~5.29'`
+If `composer` is properly installed, then these example commands will add CiviCRM to D8:
 
-!!! note "pear/exception conflict"
-    If you get an error message from composer when trying to install CiviCRM that there is a conflict in requirements for the package pear/exception. Then run the following command: `composer require pear/pear_exception:'1.0.1 as 1.0.0'` before trying to run the command in step 3 above.
+```
+cd /var/www/d8.example.org
+composer config extra.enable-patching true
+composer require civicrm/civicrm-asset-plugin:'~1.1'
+composer require civicrm/civicrm-{core,packages,drupal-8}:'~5.29'
+```
+
+You should adjust the example path (`/var/www/d8.example.org`) and the example version (`~5.29`) as needed.
+
+If you'd like more details to understand these commands or common errors, then please drill-down below.
+
+??? info "More detail: Enable patching"
+
+    A handful of packages used by CiviCRM require extra patch-files.
+
+    This is possible with the popular [cweagans/composer-patches](https://github.com/cweagans/composer-patches)
+    plugin. However, you must [opt-in to enable it](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies).
+
+??? info "More detail: Compilation tasks"
+
+    When you first install or upgrade to CiviCRM 5.31+, `composer` will prompt for permission to run CiviCRM compilation tasks. We recommend that you select `[a]lways`.
+
+    If you wish to suppress the prompt, see [Composer Compile Plugin: Managing the root package (for site-builders)](https://github.com/civicrm/composer-compile-plugin/blob/master/doc/site-build.md).
+
+??? info "More detail: Required packages"
+
+    | Package | Description |
+    | -- | -- |
+    | `civicrm/civicrm-asset-plugin` | A tool which automatically copies JS+CSS assets from CiviCRM to D8's `web/` folder |
+    | `civicrm/civicrm-core` | The primary CiviCRM codebase |
+    | `civicrm/civicrm-drupal-8` | The integration module for CiviCRM and D8 |
+    | `civicrm/civicrm-packages` | A collection of third-party/legacy packages used by CiviCRM |
+
+??? info "More detail: Version constraints"
+
+    The primary CiviCRM packages (`civicrm-core`, `civicrm-drupal-8`, `civicrm-packages`) have *synchronized*
+    versions. If one package is installed with v5.30.1, then the others should also be v5.30.1.
+
+    The following expression references the three packages and applies the same version-constraint to each:
+
+    ```
+    civicrm/civicrm-{core,packages,drupal-8}:'~5.29'
+    ```
+
+    The expression `~5.29` is a version-constraint.  It means that composer will install *approximately* v`5.29`.  It may
+    install a newer patch-release (e.g.  `5.29.1`) or a newer minor-release (e.g.  `5.31.0`).  However, it will avoid
+    major-releases (e.g. `6.0.0`).
+
+    Many `composer` tutorials rely on `composer` to automatically choose package-versions.
+    This is not recommended for CiviCRM/D8. Instead, package versioning should be explicit to ensure that:
+
+    1. CiviCRM versions remain synchronized.
+    2. CiviCRM stable releases are preferred over developmental releases.
+
+       <!-- honestly, that second thing is weird to me.  if people get dev releases unintentionally, then they've
+        probably misconfigured/misunderstood their `composer.json`.  but given how consultancies blend upstream/public
+        pkgs and inhouse/private pkgs, and given how inhouse pkgs tend to have lax versioning, i can see how there'd
+        be pressure on D8 site-builders to make the configuration promiscuous -->
+
+??? question "How to resolve conflicts in `pear/exception`?"
+
+    In some D8 configurations, you may see an error message about the package `pear/exception`. This is
+    because some packages use `pear/exception` -- but they have been overly specific about the required
+    version. (To wit: they require version `1.0.0` when version `1.0.1` will also work.)
+
+    To resolve this error, you can install v1.0.1 and *pretend* that it is v1.0.0:
+
+    ```
+    composer require pear/pear_exception:'1.0.1 as 1.0.0'
+    ```
+
+    After fixing this, you may continue the regular installation commands.
+
+<!--
 
 Optionally you can also require the [`cv`](https://github.com/civicrm/cv) command-line helper/interface for CiviCRM with:
 
@@ -68,6 +142,8 @@ Optionally you can also require the [`cv`](https://github.com/civicrm/cv) comman
     **Composer installs of cv are currently broken** for now use the [manual install steps](https://github.com/civicrm/cv#download).
 
 * `composer require civicrm/cv` - This will place the cv binary in `./vendor/bin/cv` relative to your `composer.json` file.
+
+-->
 
 ## Get the translations {:#i18n}
 
@@ -104,69 +180,39 @@ The warnings above notwithstanding to install CiviCRM on Drupal 8 requires the f
 
 Now we move onto [Installing CiviCRM - Command line install](#installing-commandline)
 
-<a name="installing"></a>
+<a name="installing"></a><a name="installing-gui"></a><a name="installing-commandline"></a>
 ## Run the installer {:#installer}
 
-The installer prepares the database and configuration files.  You may run the installer through the web interface (which is simpler) or the command-line interface (which has more options).
+The installer verifies requirements, prepares the database, and initializes the configuration file. You may run the installer through the web interface (*which is simpler*) or the command-line interface (*which has more options*).
 
-### Web installer {:#installing-gui}
+??? example "Run installer via Drupal 8 web UI"
 
-<!-- markdownlint-disable MD046 -->
-!!! warning "Write permissions"
-    It is critical that your web-server user is able to write to the `web/sites/default/` directory in order to create `civicrm.settings.php` and that you have an appropriate value for execution time(s) and memory limit(s) as any interruption to the installer can (and will) result in an unusable install and require remedial steps to correct or a full reinstall! By default on Drupal 8.8+ this directory path is not writable by default, before installing you should ensure you grant write access to your web server user. With, e.g: `sudo chmod u+w web/sites/default`.
+    ??? warning "Installation options are very limited"
 
-    For multisite installations you'll also need to ensure your web server user has write access to additional sites e.g: `sudo chmod u+w web/sites/site2.example.org`.
-<!-- markdownlint-enable MD046 -->
+        Currently there is no interactive installer for CiviCRM on Drupal 8, so the installer uses a firm set of defaults, e.g.
 
-* Login to your Drupal site with Administrator level permissions.
-* Proceed to **Manage >> Extend** or point your web browser to the following URL:
+        * *English Language Data*: It only installs data for US English. It cannot install data for other languages.
+        * *Shared Database*: It only uses the shared CMS database. It cannot use [a separate MySQL database for CiviCRM](../general/requirements.md#mysql-connection).
+        * *No Sample Data*: It only installs an empty, baseline dataset. It cannot install sample data.
 
-    `https://example.org/admin/modules/`
+        If you need to configure any of these options, then use the command-line installer.
 
-* Currently there is no interactive installer for CiviCRM on Drupal 8 and enabling the module in Drupal 8 will install CiviCRM into your existing Drupal 8 database.
+    ??? warning "Write permissions"
+        It is critical that your web-server user is able to write to the `web/sites/default/` directory in order to create `civicrm.settings.php` and that you have an appropriate value for execution time(s) and memory limit(s) as any interruption to the installer can (and will) result in an unusable install and require remedial steps to correct or a full reinstall! By default on Drupal 8.8+ this directory path is not writable by default, before installing you should ensure you grant write access to your web server user. With, e.g: `sudo chmod u+w web/sites/default`.
 
-    !!! tip "Where Should I Store CiviCRM Data?"
-        [GUI installs](#installing-gui) of CiviCRM on Drupal 8 can only install into your existing Drupal 8 database. However using a separate database is generally preferred - as it makes backups and upgrades easier. If you want to install via the GUI **and** use a separate CiviCRM database you'd need to create the CiviCRM database manually and move the `civicrm_` tables into the new CiviCRM database, then update `civicrm.settings.php` with the new database details. If you want to install directly into a separate database see the [command line install](#installing-commandline) instructions.
+        For multisite installations you'll also need to ensure your web server user has write access to additional sites e.g: `sudo chmod u+w web/sites/site2.example.org`.
 
-### CLI installer {:installing-commandline}
+    1. Login to your Drupal site with *administrator* permissions.
+    2. Navigate to **Manage >> Extend** or point your web browser to the following URL:
 
-<!-- markdownlint-disable MD046 -->
-!!! note "Prerequisites"
-    The steps below assume that you have the prerequisites for a command line install, namely cv or some other tested command-line installer for Drupal 8 (**Hint:** There's only one of those at the moment and it's cv)
+        `https://example.org/admin/modules/`
 
-!!! warning "Write permissions"
-    It is critical that your web-server user is able to write to the `web/sites/default/` directory in order to create `civicrm.settings.php` and that you have an appropriate value for execution time(s) and memory limit(s) as any interruption to the installer can (and will) result in an unusable install and require remedial steps to correct or a full reinstall! By default on Drupal 8.8+ this directory path is not writable by default, before installing you should ensure you grant write access to your web server user. With, e.g: `sudo chmod u+w web/sites/default`.
+    3. Find "CiviCRM" and enable it.
+    4. At the bottom, click "Save Configuration". (Note: This may take a few moments to execute.)
 
-    For multisite installations you'll also need to ensure your web server user has write access to additional sites e.g: `sudo chmod u+w web/sites/site2.example.org`.
-<!-- markdownlint-enable MD046 -->
+??? example "Run installer via command-line"
 
-Make sure you're in the root directory for your Drupal 8 / CiviCRM site (the same folder/directory that holds `composer.json`).
-
-The essence of a cv install command looks like this `cv core:install -vv --cms-base-url="https://urltocms.example.org" --db="mysql://database:details@go/here:3306" --lang="en_GB"` there are many parameters available. <!-- META:To-Do Document cv usage -->
-
-For our CiviCRM install on Drupal 8 we want a command that looks like this:
-
-<!-- markdownlint-disable MD046 -->
-``` bash
-cv core:install -vv --db="DATABASE" --cms-base-url="URL" --lang="LANG"
-```
-<!-- markdownlint-enable MD046 -->
-
-Replace `cv` with the path to the cv phar on your system if applicable. The parts in `CAPS` above will need to be replaced with your site-specific information as follows:
-
-* `DATABASE` (required) is the [DSN](https://en.wikipedia.org/wiki/Data_source_name) for the database where you want CiviCRM installed.
-* `URL` (required) is the canonical URL to the root of your CMS site.
-* `LANG` (optional) is one of the supported languages for CiviCRM - it **must** exist in your `l10n` folder.
-
-#### Installing Sample Data {:#sampledata}
-
-Currently you can only install sample data using the command line and the `-m` flag to set the `loadGenerated` option. Example:
-
-<!-- markdownlint-disable MD046 -->
-``` bash
-cv core:install -vv --cms-base-url="URL" -m loadGenerated=1
-```
-<!-- markdownlint-enable MD046 -->
+    CiviCRM has a command-line administration tool, `cv`, which can perform installation. For details, see [command-line installer](../general/cli-cv.md).
 
 ## Review the permissions {:#permissions}
 

@@ -1,58 +1,82 @@
-!!! tldr "About this document"
+???+ tldr "About this document"
 
     This guide covers standard installation of CiviCRM on an existing Drupal 7 site. It assumes that you previously completed these tasks:
 
     1. [Install Drupal 7](https://www.drupal.org/docs/7/install), and...
     1. [Review the CiviCRM requirements](../general/requirements.md)
 
-!!! tldr "Similar alternatives"
+??? tldr "Alternative: Civibuild for developers"
 
     If you plan to develop patches for CiviCRM on Drupal 7, then please use the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
-
-## Identify the database {:#db-settings}
-
-You will need to know the database settings for your Drupal installation prior to running the CiviCRM installer: You can look up these values in your Drupal `settings.php` file (located by default in your `<drupal_root>/sites/default directory`) be looking for the following code:
-
-```php
-$databases = array (
-  'default' =>
-  array (
-    'default' =>
-    array (
-      'database' => 'drupal',
-      'username' => 'dbuser',
-      'password' => 'dbpassword',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
-    ),
-  ),
-);
-```
-
-In the above example:
-
-| Setting                | Value      |
-| ---------------------- | ---------- |
-| Database Server        | localhost  |
-| Drupal Database Name   | drupal     |
-| Database User Name     | dbuser     |
-| Database User Password | dbpassword |
 
 <a name="directory"></a><!-- old anchor -->
 ## Get the code {:#download}
 
-First, download CiviCRM and install the files like you would any other module:
+The [CiviCRM download page](https://civicrm.org/download) provides a pre-built archive for use with Drupal 7.  A
+typical archive file is ~20mb and looks like `civicrm-X.Y.Z-drupal.tar.gz`. It contains a folder named `civicrm/`.
 
-* As administrator in Drupal, go to Modules, click on **Install New Module** , and it will ask you to fill in the URL of the module. It will then fetch it and install it for you. You will need to enable the **Update Manager** module in the Drupal modules page to see the **Install New Module** link.
-* Alternatively, you can upload and extract the file in `<DRUPAL ROOT>/sites/all/modules`
+In Drupal 7, there is a folder for storing add-on modules: `DRUPAL_ROOT/sites/all/modules`.
 
-The result will be that the CiviCRM directory will be at `<DRUPAL ROOT>/sites/all/modules/civicrm`
+Our goal is to download the archive and extract into this folder. Here are a few example ways to download and extract:
 
-The most up-to-date version of CiviCRM is always available from the [CiviCRM website](https://civicrm.org/download)
+??? example "Download via web-browser"
 
-**Do NOT** activate the module yet - that will happen automatically when you run the installer.
+    This method does not require shell access on the server. You may adapt based your server's arrangement.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), click the link for CiviCRM / Drupal 7. Save the file locally.
+    * Extract the archive locally. For example, in a Linux workstation, one might say:
+      ```bash
+      cd ~/Downloads
+      tar xvzf civicrm-X.Y.Z-drupal.tar.gz
+      ```
+    * Observe the new folder `civicrm/`.
+    * Using your favor file-transfer system (SSH/SFTP, `rsync`, `git`, `mv`, etc), transfer the `civicrm/` folder
+      to `DRUPAL_ROOT/sites/all/modules`.
+
+??? example "Download via curl + tar"
+
+    This method require shell access to the Drupal server.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), note the current version.
+    * In the shell, navigate to the Drupal module folder (*adjust as appropriate*):
+      ```bash
+      cd DRUPAL_ROOT/sites/all/modules
+      ```
+    * In the shell, run the `curl` and `tar` commands. Adjust the version `X.Y.Z` to the appropriate value.
+      ```bash
+      curl -L "https://download.civicrm.org/civicrm-X.Y.Z-drupal.tar.gz" | tar xvz
+      ```
+
+??? example "Download via Drupal web UI"
+
+    This is the easiest way for a new administrator. However, it may not work in all deployments or
+    all versions. For
+    example, if the Drupal server has a locked-down configuration, then it may encounter permission errors
+    or timeouts. The only way to find out is to try.
+
+    * On the [CiviCRM download page](https://civicrm.org/download), right-click the link for CiviCRM / Drupal 7. Copy the URL.
+    * Login to your Drupal site with *administrator* permissions.
+    * Navigate to **Modules >> Install new module**.
+    * Paste the URL
+    * Click "Install"
+
+    ??? warning "This may not work with CiviCRM 5.13-5.30"
+
+        In CiviCRM versions 5.13 - 5.30, the prebuilt tarball included a symlink which is not accepted by
+        the Drupal 7 installer. This should work again in 5.31.
+
+        <!-- TODO: After 5.31 has been out for a while, we can move this option higher up and remove/downgrade the notice. -->
+
+    ??? warning "The "Upload"/"Browse" option is unlikely to work."
+
+        The **Install new module** page provides another option for uploading the archive from your local computer.
+        In a default PHP configuration, the upload limits are too conservative to accept the CiviCRM archive.
+
+In all cases, the final outcome should be the creation of a new folder
+
+```
+DRUPAL_ROOT/sites/all/modules/civicrm
+```
 
 ## Get the translations {:#i18n}
 
@@ -60,34 +84,29 @@ The basic CiviCRM release includes support for US English (`en_US`). To use anot
 
 ## Run the installer {:#installer}
 
-The installer will verify that you've downloaded the correct version of CiviCRM, and will check your server environment to make sure it meets CiviCRM requirements. It will then create and populate a database for CiviCRM as well as create your CiviCRM settings file (civicrm.settings.php).
+The installer verifies requirements, prepares the database, and initializes the configuration file. You may run the installer through the web interface (*which is simpler*) or the command-line interface (*which has more options*).
 
-* Login to your Drupal site with Administrator level permissions.
-* Point your web browser to the following URL:
+??? example "Run installer via Drupal 7 web UI"
 
-    `https://example.org/sites/all/modules/civicrm/install/index.php`
+    1. Enable the "CiviCRM" module
+        * Login to your Drupal site with *administrator* permissions.
+        * Navigate to the "Modules" page (`admin/modules`).
+        * Find "CiviCRM" and enable it.
+        * At the bottom, click "Save Configuration".
+    2. After enabling, the status message will display a link to "configure CiviCRM". Click it.
 
-* You should see the **CiviCRM Installer** screen.
-    * Initially, you will see a red bar with the message "These database details don't appear to be correct." This is expected as you haven't entered your database settings yet.
-    * If you see other errors, check the **Requirements** details at the bottom of the page for more information. You will need to correct any issues before continuing.
-* Fill in the CiviCRM Database Settings.
+        ??? question "What if I didn't notice the link?"
+            Use the URL bar. Navigate to the `civicrm` page (e.g. `https://example.com/civicrm`).
 
-    !!! tip "Where Should I Store CiviCRM Data?"
-        CiviCRM may be configured to use your existing Drupal database, or a separate (new) database. Using a separate database is generally preferred - as it makes backups and upgrades easier. The installer will create a new database for CiviCRM automatically if you enter a database name that doesn't already exist on your database server AND the database user you enter has permission to create databases. In case the installer does not automatically create a new database, simply create a new one following the same process as creating a new database for Drupal. Note that if you plan to use the Drupal Views module to display CiviCRM data within your Drupal pages, and if you are going to use separate databases for Drupal and CiviCRM, you need to ensure that your Drupal database user has `SELECT` permissions for your CiviCRM database.
+    3. The CiviCRM installer will open.
+        * *If there are unmet requirements*, the installer will list them. Consult the [Requirements](../general/requirements.md) documentation for additional advice.
+        * *If all the requirements are met*, proceed through the brief questionnaire.
+        * *If you have [a separate MySQL database for CiviCRM](../general/requirements.md#mysql-connection)*, then locate "Environment: CiviCRM Database". Click the edit icon and enter the [database URL](../general/requirements.md#mysql-connection).
+        * Finally, click "Install CiviCRM".
 
-* Fill in the Drupal Database Settings for your existing Drupal database (as noted [above](#db-settings)).
+??? example "Run installer via the command-line"
 
-    !!! check "Loading Sample Data"
-        The Installer includes an option to load a set of sample contact, group, and relationship data by default. Sample data can provide a useful head-start in learning to use CiviCRM. However, if you do NOT want the sample data to be loaded, just uncheck **Load sample data** under **Other Settings**.
-
-* Select the appropriate language for the base installation. You will be able to add other languages after the installation for multi-lingual sites.
-* Click the **Check Requirements and Install CiviCRM** button.
-    * The installer will configure your databases, create the settings file and redirect you to your Drupal Home page.
-    * If you still see a red bar with the message "These database details don't appear to be correct." - check the Database Details section below your settings for specific errors and problems. Once you correct these problems, click "Recheck requirements" to verify your settings before continuing.
-    * If you are on a Windows machine and get the message:
-      > "The user account used by your web-server needs to be granted write access to the following directory in order to configure the CiviCRM settings file: `C:<DRUPAL ROOT>/sites/default/`"  
-      even after changing directory permission in Explorer, see [the permissions page](../general/permissions.md) for instructions on how to set permissions on Linux, MacOS and Windows.
-    * Once you see the green "You're ready to install!" message - you can click **Check Requirements and Install CiviCRM**
+    CiviCRM has a command-line administration tool, `cv`, which can perform installation. For details, see [command-line installer](../general/cli-cv.md).
 
 ## Review the permissions {:#permissions}
 

@@ -1,4 +1,4 @@
-!!! tldr "About this document"
+???+ tldr "About this document"
 
     This guide covers standard installation of CiviCRM on an existing Joomla site. It assumes that you previously completed these tasks:
 
