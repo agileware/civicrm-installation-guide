@@ -37,6 +37,7 @@ nav:
       - Requirements: general/requirements.md
       - Permissions: general/permissions.md
       - Internationalisation: general/i18n_l10n.md
+      - Unicode PDF Fonts: general/unicode_pdf.md
       - TLS for MySQL: general/mysql_tls.md
       - CLI Installer: general/cli-cv.md
       - Troubleshooting: general/troubleshooting.md
