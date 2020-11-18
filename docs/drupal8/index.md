@@ -267,7 +267,7 @@ If your MySQL database is hosted on a different machine than your web server, or
 
 Full instructions on installing drupal are out of scope for this guide, but one method is to install into a test database first without MySQL encryption and then move the database to the live server and update settings.php to enable MySQL encryption.
 
-See [TLS for MySQL](/general/mysql_tls/) for introductory concepts and the settings for the CiviCRM database. For the Drupal database you have several options for updating settings.php:
+See [TLS for MySQL](../general/mysql_tls.md) for introductory concepts and the settings for the CiviCRM database. For the Drupal database you have several options for updating settings.php:
 
 1. The simplest, which doesn't require a client certificate, but doesn't verify the server certificate.
 
