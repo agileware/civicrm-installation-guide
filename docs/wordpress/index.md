@@ -109,60 +109,6 @@ Should an upgrade fail, you will need this backup copy to restore your site.
 
 <!-- Is the above still true for new installations in Civi 4.7/5.x? Makes sense if 4.6, which bizarrely placed the config-file in the code-directory.But in 4.7+?? -->
 
-## Enable clean URLs
-
-* Starting in Version 5.13.x CiviCRM now can support "Clean URLs" for WordPress front-end (user-facing) pages.
-* By default CiviCRM URLs are in the format of `https://example.org/civicrm?page=CiviCRM&q=civicrm/contribute/transact&reset=1&id=1` for a Contribution Page. With clean URLs enabled:
-    * A Contribution Page will have the format of `https://example.org/civicrm/contribute/transact/?reset=1&id=1`.
-    * Profile Pages can be accessed at `https://example.org/civicrm/profile/edit/?gid=1&reset=1` or `https://example.org/civicrm/profile/create/?gid=1&reset=1`.
-    * Listings would be at `https://example.org/civicrm/profile/?gid=1&reset=1`.
-    * The User's Contact Dashboard can be accessed at `https://example.org/civicrm/user/?reset=1`.
-* To Enable Cleaner URLs , start by backing up your `civicrm.settings.php` file as detailed in the "Locate and Backup the CiviCRM settings file" section above.
-* Then find this section of code in `civicrm.settings.php` On a default install it should be around line 480
-<!-- markdownlint-disable MD046 -->
-``` php
-if (!defined('CIVICRM_CLEANURL')) {
-  if ( function_exists('variable_get') && variable_get('clean_url', '0') != '0') {
-    define('CIVICRM_CLEANURL', 1 );
-  }
-  elseif ( function_exists('config_get') && config_get('system.core', 'clean_url') != 0) {
-    define('CIVICRM_CLEANURL', 1 );
-  }
-  else {
-    define('CIVICRM_CLEANURL', 0);
-  }
-}
-```
-<!-- markdownlint-enable MD046 -->
-* Replace the above code with:
-<!-- markdownlint-disable MD046 -->
-``` php
-if (!defined('CIVICRM_CLEANURL')) {
-  // check for Drupal clean URLs
-  if ( function_exists('variable_get') && variable_get('clean_url', '0') != '0') {
-    define('CIVICRM_CLEANURL', 1 );
-  }
-  elseif ( function_exists('config_get') && config_get('system.core', 'clean_url') != 0) {
-    define('CIVICRM_CLEANURL', 1 );
-  }
-  // check for WordPress clean URLs
-  elseif( function_exists('get_option') && get_option('permalink_structure') != '' ) {
-    define('CIVICRM_CLEANURL', 1 );
-  }
-  else {
-    define('CIVICRM_CLEANURL', 0 );
-  }
-}
-```
-<!-- markdownlint-enable MD046 -->
-* You will need to go to **Settings >> CMS Database Integration** `https://example.org/wp-admin/admin.php?page=CiviCRM&q=civicrm/admin/setting/uf&reset=1` and make sure the base page points to an existing WP page (usually /civicrm)
-
-* You will need  to flush rewrite rules in WordPress for clean URLs to work. Visit the Permalinks settings page to trigger this Go to **Settings >> Permalinks** The URL will be `https://example.org/wp-admin/options-permalink.php`
-
-  . ![WordPress Permalink settings.](../images/wp-permalinks.png)
-
-* Now Cleaner URLs will be enabled.  Enabling Cleaner URLs does not change how shortcodes work in CiviCRM and existing "Old" style URLs will still work
-
 ## Synchronize the users {:#contacts-users}
 
 Once installed, CiviCRM keeps your WordPress Users synchronized with corresponding CiviCRM contact records. The 'rule' is that there will be a matched contact record for each WordPress user record. Conversely, only contacts who are authenticated users of your site will have corresponding WordPress user records.
