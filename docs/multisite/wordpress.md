@@ -1,6 +1,6 @@
 # WordPress Multisite
 
-If using a WordPress multisite when CiviCRM is activated the `civicrm.settings.php` file is added within the [uploads directory for that site](https://codex.wordpress.org/Multisite_Network_Administration#Uploaded_File_Path). Site 1, generally the main site of the multisite, uses the default upload path `/wp-content/uploads/civicrm`.
+If using a WordPress multisite when CiviCRM is activated the `civicrm.settings.php` file is added within the [uploads directory for that site](https://wordpress.org/support/article/multisite-network-administration/#uploaded-file-path). Site 1, generally the main site of the multisite, uses the default upload path `/wp-content/uploads/civicrm`.
 
 If you are looking to share one CiviCRM database across multiple websites, for a chapter like setup, the following needs to be added to your `wp-config.php` file.
 
@@ -71,7 +71,7 @@ Rinse and repeat for any additional subdomains.
 
 Big thanks to **Christian Wach** for [this code](https://gist.github.com/christianwach/5ca120670152df3dbfb8d3ca42079a96), which was adapted to fit subdomain setup.
 
-You do **not** need to do the **Create the domain record** step (stated above) if you use the [multisite extension](https://github.com/eileenmcnaughton/org.civicrm.multisite). It is recommended you copy and paste the following command into your shell/terminal:
+You do **not** need to do the **Create the domain record** step (stated above) if you use the [multisite extension](https://lab.civicrm.org/extensions/multisite). It is recommended you copy and paste the following command into your shell/terminal:
 
 `wp cv api MultisiteDomain.create debug=1 sequential=1 name="Sub1ExampleOrg" is_transactional=0 group_id="2" contact_id="4"`
 
