@@ -101,7 +101,7 @@ Once you have that, you should be good to go!
 
 If you still experience errors or problems at this point, make sure to clear your browser cache. If to no avail, try private/incognito browsing. Finally, as a last point, clear your DNS cache.
 
-Windows (Terminal/CMD): `ipconfig /flushdns`
-Mac/Linux: `sudo killall -HUP mDNSResponder`
+* Windows (Terminal/CMD): `ipconfig /flushdns`
+* Mac/Linux: `sudo killall -HUP mDNSResponder`
 
 **Recommendation**: Create a Site Admin role for any administrator of sub-sites that are sharing CiviCRM, meaning the default Administrator role is only used on the main site. This is recommended since by default all Adminstrators automatically get access to Administer CiviCRM and will be able to create things like custom data fields. By creating a Site Admin role the CiviCRM permissions can be managed from [Administer > Users and Permissions > Permissions (Access Control)](https://docs.civicrm.org/user/en/latest/initial-set-up/permissions-and-access-control/#access-control-permissions-in-wordpress) and will allow only main site administrator access to Administer CiviCRM.
