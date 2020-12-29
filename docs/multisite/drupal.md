@@ -62,7 +62,7 @@ And import this file to your CiviCRM database.
 
 ## Create the new site
 
-Setup the CMS for the second site.  In some cases, you will install a new instance of the CMS.  You can also use the existing CMS if you are using the [Domain Access](https://www.drupal.org/project/domain) module for Drupal or the [WordPress multisite network](https://codex.wordpress.org/Create_A_Network) feature.
+Setup the CMS for the second site.  In some cases, you will install a new instance of the CMS.  You can also use the existing CMS if you are using the [Domain Access](https://www.drupal.org/project/domain) module for Drupal.
 
 ### Locate the settings file for the second site
 
