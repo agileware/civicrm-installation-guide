@@ -2,7 +2,7 @@
 
 ## Install the first site
 
-Say `site1.example.com` which would be same as any other normal civicrm installation.
+Say `site1.example.com` which would be same as any other normal CiviCRM installation.
 
 It is not necessary to for the top level site to be multisite aware but if you want it to be then enable multisite by visiting `civicrm/admin/setting/preferences/multisite?reset=1`. If you do this you should also grant the associated permission in Drupal: "CiviCRM: administer Multiple Organizations" to your developers or website administrators.
 
@@ -10,10 +10,10 @@ Create a new contact to be the domain contact for the new domain (note steps 2 &
 
 ## Create new database records
 
-You can create the database records in this section automatically if you prefer by installing the [Multisite Permissioning](https://civicrm.org/extensions/multisite-permissioning) extension and using the `MultisiteDomain.create` api as described in the [extension's README.md file](https://github.com/eileenmcnaughton/org.civicrm.multisite/).
+You can create the database records in this section automatically if you prefer by installing the [Multisite Permissioning](https://civicrm.org/extensions/multisite-permissioning) extension and using the `MultisiteDomain.create` api as described in the [extension's README file](https://lab.civicrm.org/extensions/multisite/-/blob/master/README.md).
 
 ### Create the "Default Organization" record
-Each CiviCRM domain must have its own [Default Organization](../setup/index.md#edit-domain-information). Create a new Organization record to represent the default organization of the new domain.
+Each CiviCRM domain must have its own [Default Organization](https://docs.civicrm.org/sysadmin/en/latest/setup/#site-configuration). Create a new Organization record to represent the default organization of the new domain.
 
 ### Create the domain record
 
@@ -66,11 +66,11 @@ Setup the CMS for the second site.  In some cases, you will install a new instan
 
 ### Locate the settings file for the second site
 
-Depending on how you would like to install civicrm for site 2, proceed to one of the following steps:
+Depending on how you would like to install CiviCRM for site 2, proceed to one of the following steps:
 
 ### Manual CiviCRM installation for site2.example.com.
 
-* Copy civicrm settings file from previous site (site1) to the new site (site2).
+* Copy CiviCRM settings file from previous site (site1) to the new site (site2).
 
     ```
     cp sites/site1.example.com/civicrm.settings.php sites/site2.example.com/
@@ -78,7 +78,7 @@ Depending on how you would like to install civicrm for site 2, proceed to one of
 
     Note `sites/site2.example.com/civicrm.settings.php` is your new settings file which needs to be modified.
 
-* The sites can share a single instance of the civicrm code in sites/all/modules/ directory if they are using the same CMS.
+* The sites can share a single instance of the CiviCRM code in sites/all/modules/ directory if they are using the same CMS.
 
 * Modify `sites/site2.example.com/civicrm.settings.php` file to adjust settings like `CIVICRM_TEMPLATE_COMPILEDIR`, `CIVICRM_UF_BASEURL` as per new site.
 * Enable the CiviCRM module through Drupal, at Site building -> Modules ( `/admin/build/modules` ).
@@ -88,7 +88,7 @@ Depending on how you would like to install civicrm for site 2, proceed to one of
 !!! note
     If you're using Drupal with Domain Access, consider installing the [Domain Access CiviCRM](https://civicrm.org/extensions/domain-access-civicrm) module if users might be creating new Drupal accounts via CiviCRM profiles.
 
-Similar to WordPress, with Domain Access module there is only one copy of the codebase, and one copy of civicrm.settings.php.
+Similar to WordPress, with Domain Access module there is only one copy of the codebase, and one copy of `civicrm.settings.php`.
 
 The easiest is to assign the same domain_id's in Drupal and CiviCRM, then you can just replace this line:
 
@@ -141,16 +141,16 @@ With either of the above, skip the following "Register a new domain" step.
 
 ### Auto + manual installation for site2.example.com
 
-* Use civicrm installer for installing civicrm for `site2.example.com`. Specify a new civicrm db which can be dropped later.
+* Use CiviCRM installer for installing CiviCRM for `site2.example.com`. Specify a new CiviCRM database which can be dropped later.
   Note `sites/site2.example.com/civicrm.settings.php` is your new settings file which needs to be modified.
 
-* Adjust `CIVICRM_DSN` setting to use the civicrm db used by site1. Drop the new civicrm db previously created.
+* Adjust `CIVICRM_DSN` setting to use the CiviCRM database used by site1. Drop the new CiviCRM database previously created.
 
-* The sites can share a single instance of the civicrm code in `sites/all/modules/` directory.
+* The sites can share a single instance of the CiviCRM code in `sites/all/modules/` directory.
 
 ### Register a new domain
 
-Modify located civicrm.settings.php file (for site2) to change following line -
+Modify located `civicrm.settings.php` file (for site2) to change following line -
 
 ```php
 define( 'CIVICRM_DOMAIN_ID' , 1 );
@@ -164,7 +164,7 @@ define( 'CIVICRM_DOMAIN_ID' , 2 );
 
 ### Register a domain group
 
-In multi-org installation, you can configure a group for each multi-site aware domain (not necessarily including the top level domain). When you login to the site and go to "manage groups" screen, you will notice a group with the name as that of domain. System requires you to register this master group responsible for holding sub-groups/contacts. Contacts using the site will be automatically added to the site. You need to set a different group for each site at `civicrm/admin/setting/preferences/multisite?reset=1`
+In multi-org installation, you can configure a group for each multisite aware domain (not necessarily including the top level domain). When you login to the site and go to "manage groups" screen, you will notice a group with the name as that of domain. System requires you to register this master group responsible for holding sub-groups/contacts. Contacts using the site will be automatically added to the site. You need to set a different group for each site at `civicrm/admin/setting/preferences/multisite?reset=1`
 
 Note that it is valid not to enable multisite on the top level domain (which is unaware of the subdomains). This improves performance by not creating such a deep hierarchy of groups
 
@@ -176,4 +176,4 @@ To represent a multi-org hierarchy, an organization could be connected to the ma
 
 Here we restrict users on Site N to contacts in Site N's Site Group.
 
-There is a separate extension called **multisite** that automatically implements CiviCRM access control for multi-site installations, such that normal users on Site N are restricted to contacts in Site N's Site Group. Note that users with permission to view or edit all contacts bypass this access control.
+There is a separate extension called **multisite** that automatically implements CiviCRM access control for multisite installations, such that normal users on Site N are restricted to contacts in Site N's Site Group. Note that users with permission to view or edit all contacts bypass this access control.
