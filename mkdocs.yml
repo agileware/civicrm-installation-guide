@@ -1,7 +1,7 @@
 site_name: CiviCRM Installation Guide
 site_url: https://docs.civicrm.org/installation/en/stable/
 repo_url: https://lab.civicrm.org/documentation/docs/installation/
-edit_uri: https://lab.civicrm.org/-/ide/project/documentation/docs/installation/blob/master/-/docs/
+edit_uri: https://lab.civicrm.org/documentation/docs/installation/-/edit/master/docs/
 site_description: This guide is aimed at CiviCRM users and implementors who would like to learn how to install and setup CiviCRM.
 site_author: The CiviCRM Community
 
