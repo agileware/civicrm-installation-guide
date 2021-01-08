@@ -68,6 +68,18 @@ It is also important to ensure that the same PHP extensions/modules are loaded o
 | PHP 7.0 | **incompatible** | incompatible as of 5.25.0 |
 | PHP 5.6 | **incompatible** | **incompatible** |
 
+??? info "Historical PHP Versions"
+    The table below gives information on PHP minimum and recommended version compatibility for old versions of CiviCRM:
+
+    | CiviCRM Version          | PHP Minimum Version | PHP Recommended Version |
+    | ------------------------ | ------------------- | ----------------------- |
+    | 5.1 - 5.5                | 5.5                 | 7.0                     |
+    | 5.6 - 5.9                | 5.5                 | 7.1                     |
+    | 5.10 - 5.13              | 5.6                 | 7.2                     |
+    | 5.14 - 5.23              | 7.0                 | 7.2                     |
+    | 5.24                     | 7.0                 | 7.3                     |
+    | 5.25 - Current           | 7.1                 | 7.3                     |
+
 ### PHP Extensions
 
 To install these extensions, you will typically install a separate package within your server's package manager (e.g. `apt-get` on Ubuntu).
@@ -111,6 +123,14 @@ Other database servers (such as PostgreSQL) are not compatible with CiviCRM.
 ### MySQL Version
 
 Your MySQL version should be **5.7.5 or greater** or MariaDB **10.0.2 or greater**.  As of version 5.28 the minimum install version for CiviCRM is 5.6 users on versions before that are advised to upgrade their MySQL instance to a recommended version. CiviCRM may not run correctly on MySQL 5.6 as these versions don't support some of the functionality CiviCRM uses to ensure that database actions don't compete for the same resources.
+
+??? info "Historical MySQL Versions"
+    The table below gives information on MySQL minimum and recommended version compatibility for old versions of CiviCRM:
+
+    | CiviCRM Version          | PHP Minimum Version | PHP Recommended Version |
+    | ------------------------ | ------------------- | ----------------------- |
+    | 5.26 - 5.27              | 5.5                 | 5.7                     |
+    | 5.28 - Current           | 5.6.5               | 5.7                     |
 
 #### MySQL 8
 
