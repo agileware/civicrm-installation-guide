@@ -204,6 +204,10 @@ CiviCRM performs various operations based on dates and times – for example, de
 * PHP, MySQL, and/or the operating system may be configured to use different default timezones. Verify the configuration of each.
 * The content management system (Drupal, Joomla, or WordPress) or one of its plugins may manipulate the timezone settings without informing CiviCRM's. You may wish to post to [Stack Exchange](https://civicrm.stackexchange.com/) or [Mattermost](https://chat.civicrm.org) about your problem. Please include any available details about the timezone settings in the operating system, PHP, MySQL, and the CMS; if you have any special CMS plugins or configuration options which may affect timezones, please report them.
 
+#### MySQL/PHP Time Mismatch Warning - WordPress
+
+If you get a MySQL/PHP mismatch warning, under `Settings > General` set the timezone to a City, not UTC offset.  For example, use `London` not `UTC+0`.
+
 ### MySQL Permissions
 
 The permissions you'll need to assign to the MySQL user that CiviCRM uses will **depend on your version of MySQL**. The following example assumes you have a database called `civicrm` and a MySQL user called `civicrm_user`.
