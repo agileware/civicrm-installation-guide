@@ -47,5 +47,7 @@ nav:
       - Hosting: planning/hosting.md
       - Choosing a CMS: planning/cms.md
       - Transitioning to CiviCRM: planning/transition.md
-
-
+  - Multisite installation:
+      - Multisite installation: multisite/index.md
+      - Drupal: multisite/drupal.md
+      - WordPress: multisite/wordpress.md
