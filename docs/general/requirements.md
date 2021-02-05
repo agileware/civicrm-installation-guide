@@ -64,8 +64,8 @@ It is also important to ensure that the same PHP extensions/modules are loaded o
 | PHP 7.4 | **incompatible** | Testing has shown that as of CiviCRM 5.28 can be run but issues are still being worked on in this [lab issue](https://lab.civicrm.org/dev/core/-/issues/1496) |
 | PHP 7.3 | compatible and **recommended** | compatible and **recommended** |
 | PHP 7.2 | compatible and **recommended** - but see note below about resaving the SMTP password | compatible and **recommended** but see note below about resaving the SMTP password |
-| PHP 7.1 | compatible but **not recommended** due to to [PHP end-of life](http://php.net/eol.php) in Dec 2019 | compatible but **not recommended** due to to [PHP end-of life](http://php.net/eol.php) in Dec 2019 |
-| PHP 7.0 | **incompatible** | incompatible as of 5.25.0 |
+| PHP 7.1 | compatible but **not recommended** due to to [PHP end-of life](http://php.net/eol.php) in Dec 2019 | **incompatible** as of 5.35.0 |
+| PHP 7.0 | **incompatible** | **incompatible** as of 5.25.0 |
 | PHP 5.6 | **incompatible** | **incompatible** |
 
 ??? info "Historical PHP Versions"
@@ -78,7 +78,8 @@ It is also important to ensure that the same PHP extensions/modules are loaded o
     | 5.10 - 5.13              | 5.6                 | 7.2                     |
     | 5.14 - 5.23              | 7.0                 | 7.2                     |
     | 5.24                     | 7.0                 | 7.3                     |
-    | 5.25 - Current           | 7.1                 | 7.3                     |
+    | 5.25 - 5.34              | 7.1                 | 7.3                     |
+    | 5.35 - Current           | 7.2                 | 7.3                     |
 
 ### PHP Extensions
 
@@ -127,10 +128,11 @@ Your MySQL version should be **5.7.5 or greater** or MariaDB **10.0.2 or greater
 ??? info "Historical MySQL Versions"
     The table below gives information on MySQL minimum and recommended version compatibility for old versions of CiviCRM:
 
-    | CiviCRM Version          | PHP Minimum Version | PHP Recommended Version |
-    | ------------------------ | ------------------- | ----------------------- |
-    | 5.26 - 5.27              | 5.5                 | 5.7                     |
-    | 5.28 - Current           | 5.6.5               | 5.7                     |
+    | CiviCRM Version          | MySQL Minimum Version | MySQL Recommended Version | MariaDB Minimum Version | MariaDB Recommended Version |
+    | ------------------------ | --------------------- | ------------------------- | ----------------------- | ------------------- |
+    | 5.26 - 5.27              | 5.5                   | 5.7                       |                         |      |
+    | 5.28 - 5.33              | 5.6.5                 | 5.7                       |                         | 10.4 |
+    | 5.34 - Current           | 5.7                   | 5.7                       | 10.0.2                  | 10.4 |
 
 #### MySQL 8
 
