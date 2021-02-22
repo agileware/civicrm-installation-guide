@@ -1,28 +1,28 @@
 ???+ tldr "About this document"
 
-    This guide covers standard installation of CiviCRM on an existing Drupal 8 site. It assumes that you previously completed these tasks:
+    This guide covers standard installation of CiviCRM on an existing Drupal 8 or 9 site. It assumes that you previously completed these tasks:
 
-    1. [Install Drupal 8](https://www.drupal.org/docs/8/install), and...
+    1. [Install Drupal 8](https://www.drupal.org/docs/8/install) [or 9](https://www.drupal.org/docs/9/install), and...
     1. [Review the CiviCRM requirements](../general/requirements.md)
 
 ??? tldr "Alternative: Civibuild for developers"
 
-    If you plan to develop patches for CiviCRM on Drupal 8, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
+    If you plan to develop patches for CiviCRM on Drupal 8 or 9, then please read the [Developer Guide](https://docs.civicrm.org/dev/en/latest) for information about [Buildkit](https://docs.civicrm.org/dev/en/latest/tools/buildkit/) and [civibuild](https://docs.civicrm.org/dev/en/latest/tools/civibuild/).
 
 <a name="downloading"></a><!-- old anchor -->
 ## Get the code {:#download}
 
-Drupal 8 (D8) sites are typically administered with [Composer](https://www.getcomposer.org). Composer is a *dependency management* tool which can add, upgrade, and remove software *packages* for your site.
+Drupal 8 (D8) and Drupal 9 (D9) sites are typically administered with [Composer](https://www.getcomposer.org). Composer is a *dependency management* tool which can add, upgrade, and remove software *packages* for your site.
 
 CiviCRM is published as a suite of related packages. Our goal is to use Composer to add CiviCRM's packages to the D8 site.
 
-If you do not work regularly with D8+Composer, then you should take a refresher before installing CiviCRM.
+If you do not work regularly with Drupal 8 or 9 and Composer, then you should take a refresher before installing CiviCRM.
 
-??? example "Quick and dirty introduction to D8 with `composer`"
+??? example "Quick and dirty introduction to Drupal 8 or 9 with `composer`"
 
-    Composer requires shell access to the D8 site. It defines a command `composer`.
+    Composer requires shell access to the D8/D9 site. It defines a command `composer`.
 
-    Many D8 sites are initialized via `composer`, which means that `composer` is already available.  This
+    Many D8/D9 sites are initialized via `composer`, which means that `composer` is already available.  This
     can be confirmed in the shell by running `composer --version`:
 
     ```
@@ -35,7 +35,7 @@ If you do not work regularly with D8+Composer, then you should take a refresher 
 
     If `composer` is missing, then you must [download and install it](https://getcomposer.org/download/) first.
     Additionally, you probably need to [set composer's memory limit](https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors)
-    high enough for D8.
+    high enough for D8/D9.
 
     Once you have `composer`, you need to navigate to the composer-root. You can recognize it by the following:
 
@@ -46,29 +46,31 @@ If you do not work regularly with D8+Composer, then you should take a refresher 
     A typical file-hierarchy might look like:
 
     ```
-    /var/www/d8.example.org/                Composer-root
-    /var/www/d8.example.org/composer.json   Composer-configuration
-    /var/www/d8.example.org/composer.lock   Composer-configuration
-    /var/www/d8.example.org/web/            Web-root (usually)
-    /var/www/d8.example.org/vendor/         Downloaded packages
+    /var/www/drupal.example.org/                Composer-root
+    /var/www/drupal.example.org/composer.json   Composer-configuration
+    /var/www/drupal.example.org/composer.lock   Composer-configuration
+    /var/www/drupal.example.org/web/            Web-root (usually)
+    /var/www/drupal.example.org/vendor/         Downloaded packages
     ```
 
-    To work with `composer` and D8, you must open a shell and navigate to the composer-root, e.g.
+    To work with `composer` and D8/D9, you must open a shell and navigate to the composer-root, e.g.
 
     ```
-    cd /var/www/d8.example.org
+    cd /var/www/drupal.example.org
     ```
 
-If `composer` is properly installed, then these example commands will add CiviCRM to D8:
+    **Note:** Drupal 9 and CiviCRM combinations require use of Composer 2.x.x
+
+If `composer` is properly installed, then these example commands will add CiviCRM to D8 or D9:
 
 ```
-cd /var/www/d8.example.org
+cd /var/www/drupal.example.org
 composer config extra.enable-patching true
 composer require civicrm/civicrm-asset-plugin:'~1.1'
-composer require civicrm/civicrm-{core,packages,drupal-8}:'~5.29'
+composer require civicrm/civicrm-{core,packages,drupal-8}:'~5.35'
 ```
 
-You should adjust the example path (`/var/www/d8.example.org`) and the example version (`~5.29`) as needed.
+You should adjust the example path (`/var/www/drupal.example.org`) and the example version (`~5.35`) as needed.
 
 If you'd like more details to understand these commands or common errors, then please drill-down below.
 
@@ -89,35 +91,35 @@ If you'd like more details to understand these commands or common errors, then p
 
     | Package | Description |
     | -- | -- |
-    | `civicrm/civicrm-asset-plugin` | A tool which automatically copies JS+CSS assets from CiviCRM to D8's `web/` folder |
+    | `civicrm/civicrm-asset-plugin` | A tool which automatically copies JS+CSS assets from CiviCRM to D8/D9's `web/` folder |
     | `civicrm/civicrm-core` | The primary CiviCRM codebase |
-    | `civicrm/civicrm-drupal-8` | The integration module for CiviCRM and D8 |
+    | `civicrm/civicrm-drupal-8` | The integration module for CiviCRM and D8/D9 |
     | `civicrm/civicrm-packages` | A collection of third-party/legacy packages used by CiviCRM |
 
 ??? info "More detail: Version constraints"
 
     The primary CiviCRM packages (`civicrm-core`, `civicrm-drupal-8`, `civicrm-packages`) have *synchronized*
-    versions. If one package is installed with v5.30.1, then the others should also be v5.30.1.
+    versions. If one package is installed with v5.35, then the others should also be v5.35.
 
     The following expression references the three packages and applies the same version-constraint to each:
 
     ```
-    civicrm/civicrm-{core,packages,drupal-8}:'~5.29'
+    civicrm/civicrm-{core,packages,drupal-8}:'~5.35'
     ```
 
-    The expression `~5.29` is a version-constraint.  It means that composer will install *approximately* v`5.29`.  It may
-    install a newer patch-release (e.g.  `5.29.1`) or a newer minor-release (e.g.  `5.31.0`).  However, it will avoid
+    The expression `~5.35` is a version-constraint.  It means that composer will install *approximately* v`5.35`.  It may
+    install a newer patch-release (e.g.  `5.35.1`) or a newer minor-release (e.g.  `5.36.0`).  However, it will avoid
     major-releases (e.g. `6.0.0`).
 
     Many `composer` tutorials rely on `composer` to automatically choose package-versions.
-    This is not recommended for CiviCRM/D8. Instead, package versioning should be explicit to ensure that:
+    This is not recommended for CiviCRM and Drupal 8/9. Instead, package versioning should be explicit to ensure that:
 
     1. CiviCRM versions remain synchronized.
     2. CiviCRM stable releases are preferred over developmental releases.
 
-       <!-- honestly, that second thing is weird to me.  if people get dev releases unintentionally, then they've
+       <!-- honestly, that second thing is weird to me. If people get dev releases unintentionally, then they've
         probably misconfigured/misunderstood their `composer.json`.  but given how consultancies blend upstream/public
-        pkgs and inhouse/private pkgs, and given how inhouse pkgs tend to have lax versioning, i can see how there'd
+        pkgs and inhouse/private pkgs, and given how inhouse pkgs tend to have lax versioning, I can see how there'd
         be pressure on D8 site-builders to make the configuration promiscuous -->
 
 ??? question "How to resolve conflicts in `pear/exception`?"
@@ -147,17 +149,17 @@ Optionally you can also require the [`cv`](https://github.com/civicrm/cv) comman
 
 ## Get the translations {:#i18n}
 
-!!! warning "I18n & L10n on Drupal 8"
-    If installing with the GUI it is currently only possible to install CiviCRM in English (US) on Drupal 8. Adding the language files involves breaking with Composer best practices by writing the contents of the `civicrm-l10n` tarball into `vendor/civicrm/civicrm-core` or configuring the `civicrm.l10n` directory path after you install and placing the contents of the `civicrm-l10n` tarball into the configured directory.
+!!! warning "I18n & L10n on Drupal 8 or 9"
+    If installing with the GUI it is currently only possible to install CiviCRM in English (US) on Drupal 8/9. Adding the language files involves breaking with Composer best practices by writing the contents of the `civicrm-l10n` tarball into `vendor/civicrm/civicrm-core` or configuring the `civicrm.l10n` directory path after you install and placing the contents of the `civicrm-l10n` tarball into the configured directory.
 
 !!! error "Here Be Dragons..."
     The following steps are provided as an example - they are not supported or widely tested and may leave your site in a broken state. You use them at your own risk. No. Seriously...
 
     You will also have to repeat these steps **every** time you upgrade CiviCRM.
 
-The warnings above notwithstanding to install CiviCRM on Drupal 8 requires the following additional steps to prepare:
+The warnings above notwithstanding to install CiviCRM on Drupal 8/9 requires the following additional steps to prepare:
 
-1. Add [`cv`](https://github.com/civicrm/cv) to your Drupal 8 Site with: `composer require civicrm/cv` (**composer installs of cv are currently broken** for now use the [manual install steps](https://github.com/civicrm/cv#download).)
+1. Add [`cv`](https://github.com/civicrm/cv) to your Drupal 8/9 Site with: `composer require civicrm/cv` (**composer installs of cv are currently broken** for now use the [manual install steps](https://github.com/civicrm/cv#download).)
 1. Grab the localisation (*l10n*) files and unpack the `l10n` and `sql` subfolders into `vendor/civicrm/civicrm-core/`
     * You'll find the l10n files on the [CiviCRM Download](https://civicrm.org/download) page or from `https://download.civicrm.org/civicrm-VERSION-l10n.tar.gz` where `VERSION` is a recent version of CiviCRM.
 
@@ -165,8 +167,8 @@ The warnings above notwithstanding to install CiviCRM on Drupal 8 requires the f
 
     <!-- markdownlint-disable MD046 -->
     ``` bash
-    wget https://download.civicrm.org/civicrm-5.27.2-l10n.tar.gz
-    tar -zxvf civicrm-5.27.2-l10n.tar.gz
+    wget https://download.civicrm.org/civicrm-5.35.0-l10n.tar.gz
+    tar -zxvf civicrm-5.35.0-l10n.tar.gz
     cd civicrm/
     cp -R l10n/ ../vendor/civicrm/civicrm-core/
     cp -R sql/ ../vendor/civicrm/civicrm-core/
@@ -185,11 +187,11 @@ Now we move onto [Installing CiviCRM - Command line install](#installing-command
 
 The installer verifies requirements, prepares the database, and initializes the configuration file. You may run the installer through the web interface (*which is simpler*) or the command-line interface (*which has more options*).
 
-??? example "Run installer via Drupal 8 web UI"
+??? example "Run installer via Drupal 8/9 web UI"
 
     ??? warning "Installation options are very limited"
 
-        Currently there is no interactive installer for CiviCRM on Drupal 8, so the installer uses a firm set of defaults, e.g.
+        Currently there is no interactive installer for CiviCRM on Drupal 8/9, so the installer uses a firm set of defaults, e.g.
 
         * *English Language Data*: It only installs data for US English. It cannot install data for other languages.
         * *Shared Database*: It only uses the shared CMS database. It cannot use [a separate MySQL database for CiviCRM](../general/requirements.md#mysql-connection).
