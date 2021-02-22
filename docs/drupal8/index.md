@@ -209,8 +209,8 @@ The installer verifies requirements, prepares the database, and initializes the 
 
         `https://example.org/admin/modules/`
 
-    3. Find "CiviCRM" and enable it.
-    4. At the bottom, click "Save Configuration". (Note: This may take a few moments to execute.)
+    3. Find "CiviCRM Core" and enable it (you can optionally enable "CiviCRM Theme" to set a theme just for CiviCRM.)
+    4. At the bottom, click "Install". (Note: This may take a few moments to execute.)
 
 ??? example "Run installer via command-line"
 
