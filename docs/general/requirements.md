@@ -9,7 +9,7 @@ If you are curious what technologies other organizations are using to run CiviCR
 A recommended server environment should typically meet these guidelines:
 
 * __Operating system__: Linux
-* __CMS__: Backdrop, Drupal 7, Drupal 8, Joomla, or WordPress
+* __CMS__: Backdrop, Drupal 7, Drupal 8/9, Joomla, or WordPress
 * __PHP__: 7.2 or 7.3 -- with configuration and extension requirements
 * __MySQL__: MySQL 5.7+ or MariaDB 10.0+ -- with configuration requirements
 
@@ -37,7 +37,7 @@ See the page on [choosing a CMS](../planning/cms.md) for more information about 
 
 ### Drupal
 
-* [Drupal 8](../drupal8/index.md)
+* [Drupal 8/9](../drupal8/index.md)
 
 * [Drupal 7](../drupal7/index.md)
 
