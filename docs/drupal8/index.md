@@ -66,6 +66,7 @@ If `composer` is properly installed, then these example commands will add CiviCR
 ```
 cd /var/www/drupal.example.org
 composer config extra.enable-patching true
+composer config minimum-stability dev
 composer require civicrm/civicrm-asset-plugin:'~1.1'
 composer require civicrm/civicrm-{core,packages,drupal-8}:'~5.35'
 ```
@@ -80,6 +81,21 @@ If you'd like more details to understand these commands or common errors, then p
 
     This is possible with the popular [cweagans/composer-patches](https://github.com/cweagans/composer-patches)
     plugin. However, you must [opt-in to enable it](https://github.com/cweagans/composer-patches#allowing-patches-to-be-applied-from-dependencies).
+
+??? info "More detail: Package stability"
+
+    For any package in `composer`, there may be several available versions.  Some have an official, well-defined name
+    or number (e.g.  `v1.2.3`), and these are called "stable" versions.  Other versions have an interim name or number
+    (e.g. `v1.2.alpha1` or `dev-master`) indicating that additional testing is appropriate.
+
+    As a general rule, a new `composer` deployment will (and should) only use "stable" versions.  CiviCRM, too, is
+    generally built around "stable" dependencies.  However, in some exceptional cases, CiviCRM requires an interim
+    release of some libraries.
+
+    `composer.json` has two options which affect this: [minimum-stability](https://getcomposer.org/doc/04-schema.md#minimum-stability) sets an
+    absolute baseline, and [prefer-stable](https://getcomposer.org/doc/04-schema.md#prefer-stable) expresses a general preference.
+    Setting `minimum-stability` to `dev` enables to installation to proceed when there are exceptional cases. Setting
+    `prefer-stable` to `true` means that `composer` will use stable releases whenever it can.
 
 ??? info "More detail: Compilation tasks"
 
