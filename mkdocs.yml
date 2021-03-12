@@ -29,7 +29,7 @@ nav:
   - Home: index.md
   - Install CiviCRM on Backdrop: backdrop/index.md
   - Install CiviCRM on Drupal 7: drupal7/index.md
-  - Install CiviCRM on Drupal 8: drupal8/index.md
+  - 'Install CiviCRM on Drupal 8/9': drupal8/index.md
   - Install CiviCRM on Joomla: joomla/index.md
   - Install CiviCRM on WordPress: wordpress/index.md 
   - General: 
