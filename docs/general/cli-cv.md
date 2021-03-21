@@ -6,7 +6,7 @@
 
     1. Install a supported CMS
     1. [Review the CiviCRM requirements](../general/requirements.md)
-    1. Download the CiviCRM code. (See "*Get the code*" for [Backdrop](../backdrop/index.md#download), [Drupal 7](../drupal7/index.md#download), [Drupal 8](../drupal8/index.md#download), [Drupal 9](../drupal9/index.md#download), or [WordPress](../wordpress/index.md#download)).
+    1. Download the CiviCRM code. (See "*Get the code*" for [Backdrop](../backdrop/index.md#download), [Drupal 7](../drupal7/index.md#download), [Drupal 8](../drupal8/index.md#download), [Drupal 9](../drupal8/index.md#download), or [WordPress](../wordpress/index.md#download)).
 
 ??? tldr "Limitations"
 
