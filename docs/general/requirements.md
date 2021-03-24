@@ -59,9 +59,9 @@ It is also important to ensure that the same PHP extensions/modules are loaded o
 
 ### PHP Version
 
-| | CiviCRM 5.27 ESR | CiviCRM 5.x.x stable |
+| | CiviCRM 5.33 ESR | CiviCRM 5.x.x stable |
 | ---- | ---- | ---- |
-| PHP 7.4 | **incompatible** | Testing has shown that as of CiviCRM 5.28 can be run but issues are still being worked on in this [lab issue](https://lab.civicrm.org/dev/core/-/issues/1496) |
+| PHP 7.4 | **incompatible** | compatible and **recommended** from CiviCRM 5.37 onwards. There are still a couple of issues with regards to PHP7.4 being tracked in this [lab issue](https://lab.civicrm.org/dev/core/-/issues/1496) |
 | PHP 7.3 | compatible and **recommended** | compatible and **recommended** |
 | PHP 7.2 | compatible and **recommended** - but see note below about resaving the SMTP password | compatible and **recommended** but see note below about resaving the SMTP password |
 | PHP 7.1 | compatible but **not recommended** due to to [PHP end-of life](http://php.net/eol.php) in Dec 2019 | **incompatible** as of 5.35.0 |
@@ -100,7 +100,7 @@ To install these extensions, you will typically install a separate package withi
 
 #### PHP 7.1 and the MCrypt library
 
-* [PHP MCrypt](https://php.net/manual/en/intro.mcrypt.php) - the MCrypt extension is no longer recommended for new installations.
+* [PHP MCrypt](https://php.net/manual/en/intro.mcrypt.php) - the MCrypt extension is no longer recommended for new installations. From CiviCRM 5.34 onwards MCrypt is no longer needed.
 
     !!! warning "PHP 7.2 Compatibility"
         7.2 upgrade warning - 7.2 does not support MCrypt and if MCrypt is not installed the SMTP password (if entered) will need to be re-saved once you update your PHP version to 7.2.
@@ -136,7 +136,7 @@ Your MySQL version should be **5.7.5 or greater** or MariaDB **10.0.2 or greater
 
 #### MySQL 8
 
-As of version 5.24 CiviCRM has been shown to be able to run on MySQL 8 through the execution of our test matrix. Not all of the Content Management Systems support MySQL 8, CiviCRM MySQL 8 support is being tracked in this [open issue for MySQL 8 support](https://lab.civicrm.org/dev/core/issues/392). It is also worth knowing that both [Backdrop](https://forum.backdropcms.org/forum/installing-backdrop-1126-mysql-8-sqlmode-cant-be-set-value-noautocreateuser) and [Drupal 7](https://www.drupal.org/project/drupal/issues/2978575) have open issues with regards to MySQL 8 support. [Drupal 8](https://www.drupal.org/docs/8/system-requirements/database-server) [supports MySQL 8 as of version 8.6](https://www.drupal.org/project/drupal/issues/2966523), Current versions of WordPress and [Joomla](https://docs.joomla.org/Joomla_and_MySQL_8) appear to be compatible with MySQL 8
+As of version 5.24 CiviCRM has been shown to be able to run on MySQL 8 through the execution of our test matrix. All of the Content Management Systems support MySQL 8, CiviCRM MySQL 8 support was being tracked in this [issue for MySQL 8 support](https://lab.civicrm.org/dev/core/issues/392). [Backdrop supports MySQL 8 as of 1.17.2](https://github.com/backdrop/backdrop/releases/tag/1.17.2), [Drupal 7 as of 7.76 Supports MySQL 8](https://www.drupal.org/node/3185889), [Drupal 8](https://www.drupal.org/docs/8/system-requirements/database-server) [supports MySQL 8 as of version 8.6](https://www.drupal.org/project/drupal/issues/2966523), Current versions of WordPress and [Joomla](https://docs.joomla.org/Joomla_and_MySQL_8) appear to be compatible with MySQL 8.
 
 ### MySQL Connection {:#mysql-connection}
 
@@ -276,3 +276,7 @@ If you want to enable binary logging you will need to choose one of the followin
     ```
 
     (More information on triggers is available in the MySQL documentation about [Binary Logging of Stored Programs](http://dev.mysql.com/doc/refman/5.1/en/stored-programs-logging.html).)
+
+#### Installing on certain Cloud Providers
+
+When installing on certain cloud providers (AWS, Azure) where you are using database as a service, you will not have access to the my.cnf but you can generally use [Database Parameter Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html) or in [Azure](https://docs.microsoft.com/bs-cyrl-ba/azure/mysql/howto-server-parameters) to set the parameters such as the `log_bin_trust_function_creators` as appropriately. Also with Azure running a DB as a service there needs to be a change made to the installation code as per the answer on [Stack Exchange](https://civicrm.stackexchange.com/questions/31794/civicrm-on-azure-not-finding-the-server). This is due to Azure not permitting connections to databases without credentials.
