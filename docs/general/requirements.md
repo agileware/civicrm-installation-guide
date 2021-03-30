@@ -261,7 +261,7 @@ IDENTIFIED BY 'realpasswordhere';
 
 If you want to enable binary logging you will need to choose one of the following. Either:
 
-* Add the following line to your `/etc/my.cnf` file.
+* Add the following line to your configuration file. The location of the configuration file depends on your operating system and database server you can find more information [for MySQL here](https://dev.mysql.com/doc/refman/5.7/en/option-files.html) and [for MariaDB here](https://mariadb.com/kb/en/configuring-mariadb-with-option-files/).
 
     ```ini
     log_bin_trust_function_creators = 1
