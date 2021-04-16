@@ -109,9 +109,15 @@ To install these extensions, you will typically install a separate package withi
 
 ### PHP Configuration
 
-* Set `memory_limit` between 256 and 512 megabytes
-* Don't enable the deprecated `open_basedir` or `safemode` PHP directives. Otherwise you will have an error when automatically installing most of the extensions.
-* Don't use MAMP XCache - Several people have reported "white screen of death" trying to run CiviCRM with MAMP's XCache enabled (check MAMP > Preferences > PHP > Cache).
+The following PHP directives is the recommended minimum. These are defined in the [php.ini file](https://www.php.net/manual/ini.list.php).
+
+* [`memory_limit`](https://www.php.net/manual/ini.core.php#ini.memory-limit) 256M
+* [`max_execution_time`](https://www.php.net/manual/info.configuration.php#ini.max-execution-time) 240
+* [`max_input_time`](https://www.php.net/manual/info.configuration.php#ini.max-input-time) 120
+* [`post_max_size`](https://www.php.net/manual/ini.core.php#ini.post-max-size) and [`upload_max_filesize`](https://www.php.net/manual/ini.core.php#ini.upload-max-filesize) 50M
+
+    !!! warning "Don't use MAMP XCache"
+        Several people have reported "white screen of death" trying to run CiviCRM with MAMP's XCache enabled (check MAMP > Preferences > PHP > Cache).
 
 ## MySQL
 
